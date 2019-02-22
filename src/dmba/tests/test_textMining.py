@@ -23,8 +23,8 @@ class TestTextMining(unittest.TestCase):
     count_vect = CountVectorizer()
     counts = count_vect.fit_transform(text)
 
-    pd.set_option('display.width', min(80, pd.get_option('display.width')))
-    pd.set_option('display.max_columns', min(20, pd.get_option('display.max_columns')))
+    pd.set_option('display.width', 100)
+    pd.set_option('display.max_columns', 20)
     print(pd.get_option('display.width'), pd.get_option('display.max_columns'))
     
     out = StringIO()
