@@ -13,9 +13,9 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Setup Environment Variables
-        command: |
-          echo 'export TERM=xterm-256color' >> $BASH_ENV
+          name: Setup Environment Variables
+          command: |
+            echo 'export TERM=xterm-256color' >> $BASH_ENV
 
       # Download and cache dependencies
       - restore_cache:
