@@ -13,7 +13,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 from dmba import printTermDocumentMatrix
 
-pd.set_option('width', min(80, pd.get_option('width')))
+pd.set_option('display.width', min(80, pd.get_option('display.width')))
 
 class TestTextMining(unittest.TestCase):
   def test_printTermDocumentMatrix(self):
