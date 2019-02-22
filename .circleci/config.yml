@@ -12,10 +12,6 @@ jobs:
     
     steps:
       - checkout
-      - run:
-          name: Setup Environment Variables
-          command: |
-            echo 'export TERM=xterm-256color' >> $BASH_ENV
 
       # Download and cache dependencies
       - restore_cache:
@@ -41,6 +37,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
+            export TERM=xterm
             python setup.py test
 
 #       - store_artifacts:
