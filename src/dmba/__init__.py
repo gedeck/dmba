@@ -7,4 +7,5 @@ Applications in Python"
 from .featureSelection import exhaustive_search, forward_selection, backward_elimination, stepwise_selection
 from .graphs import plotDecisionTree, liftChart, gainsChart
 from .metric import regressionSummary, classificationSummary
+from .metric import AIC_score, BIC_score, adjusted_r2_score
 from .textMining import printTermDocumentMatrix

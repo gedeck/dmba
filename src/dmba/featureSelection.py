@@ -25,6 +25,7 @@ def exhaustive_search(variables, train_model, score_model):
         best_score = None
         best_model = None
         for subset in itertools.combinations(variables, nvariables):
+            subset = list(subset)
             subset_model = train_model(subset)
             subset_score = score_model(subset_model, subset)
             if best_subset is None or best_score > subset_score:
@@ -53,8 +54,8 @@ def backward_elimination(variables, train_model, score_model, verbose=False):
     """
     # we start with a model that contains all variables
     best_variables = list(variables)  
-    best_model = train_model(variables)
-    best_score = score_model(best_model)
+    best_model = train_model(best_variables)
+    best_score = score_model(best_model, best_variables)
     if verbose:
         print('Variables: ' + ', '.join(variables))
         print('Start: score={:.2f}'.format(best_score))
