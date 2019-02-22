@@ -13,8 +13,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 from dmba import printTermDocumentMatrix
 
-pd.set_option('display.width', min(80, pd.get_option('display.width')))
-pd.set_option('display.max_columns', min(20, pd.get_option('display.max_columns')))
 
 
 class TestTextMining(unittest.TestCase):
@@ -24,6 +22,10 @@ class TestTextMining(unittest.TestCase):
             'the third sentence is here.']
     count_vect = CountVectorizer()
     counts = count_vect.fit_transform(text)
+
+    pd.set_option('display.width', min(80, pd.get_option('display.width')))
+    pd.set_option('display.max_columns', min(20, pd.get_option('display.max_columns')))
+    print(pd.get_option('display.width'), pd.get_option('display.max_columns'))
     
     out = StringIO()
     with redirect_stdout(out):
