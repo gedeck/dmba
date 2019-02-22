@@ -33,3 +33,4 @@ class TestTextMining(unittest.TestCase):
     self.assertIn('S1  S2  S3', s)
     self.assertIn('first      1   0   0', s)
     self.assertIn('the        1   0   1', s)
+    self.assertIn('thex       1   0   1', s)
