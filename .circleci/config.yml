@@ -1,6 +1,7 @@
 # Python CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-python/ for more details
+TERM=xterm-256color
 #
 version: 2
 jobs:
@@ -12,6 +13,10 @@ jobs:
     
     steps:
       - checkout
+      - run:
+        name: Setup Environment Variables
+        command: |
+          echo 'export TERM=xterm-256color' >> $BASH_ENV
 
       # Download and cache dependencies
       - restore_cache:
