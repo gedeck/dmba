@@ -7,8 +7,10 @@ Applications in Python"
 import io
 import pandas as pd
 from sklearn.tree import export_graphviz
-from IPython.display import Image
-
+try:
+  from IPython.display import Image
+except ImportError:
+  Image = None
 try:
   import pydotplus
 except ImportError:
@@ -44,11 +46,12 @@ def liftChart(predicted, title='Decile Lift Chart', labelBars=True, ax=None, fig
     return ax
 
 
-def gainsChart(gains, ax=None, figsize=None):
+def gainsChart(gains, color=None, label=None, ax=None, figsize=None):
     """ Create a gains chart using predicted values 
     
     Input: 
         gains: must be sorted by probability
+        color (optional): color of graph
         ax (optional): axis for matplotlib graph
         figsize (optional): size of matplotlib graph
     """
@@ -62,7 +65,8 @@ def gainsChart(gains, ax=None, figsize=None):
     # filled polygon shows the perfect model
     # ax.fill([0, nActual, nTotal], [0, nActual, nActual], color='#eeeeee')
 
-    ax = gains_df.plot(x='records', y='cumGains', legend=False, ax=ax, figsize=figsize)
+    ax = gains_df.plot(x='records', y='cumGains', color=color, label=label, legend=False, 
+                       ax=ax, figsize=figsize)
     # Add line for perfect model
     # ax.plot([0, nActual, nTotal], [0, nActual, nActual], linestyle='--', color='r')
 
@@ -83,10 +87,13 @@ def plotDecisionTree(decisionTree, feature_names=None, class_names=None, impurit
         impurity (optional): show node impurity
         label (optional): only show labels at the root
         max_depth (optional): limit 
+        rotate (optional): rotate the layout of the graph
         pdfFile (optional): provide pathname to create a PDF file of the graph
     """
     if pydotplus is None:
         return 'You need to install pydotplus to visualize decision trees'
+    if Image is None:
+        return 'You need to install ipython to visualize decision trees'
     if class_names is not None:
         class_names = [str(s) for s in class_names]  # convert to strings
     dot_data = io.StringIO()
