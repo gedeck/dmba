@@ -8,9 +8,12 @@ import unittest
 from io import StringIO
 from contextlib import redirect_stdout
 
+import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 
 from dmba import printTermDocumentMatrix
+
+pd.set_option('width', min(80, pd.get_option('width')))
 
 class TestTextMining(unittest.TestCase):
   def test_printTermDocumentMatrix(self):
