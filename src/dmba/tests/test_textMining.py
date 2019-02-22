@@ -14,7 +14,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from dmba import printTermDocumentMatrix
 
 pd.set_option('display.width', min(80, pd.get_option('display.width')))
-print(pd.get_option('display.max_columns'))
+
 
 class TestTextMining(unittest.TestCase):
   def test_printTermDocumentMatrix(self):
@@ -28,7 +28,7 @@ class TestTextMining(unittest.TestCase):
     with redirect_stdout(out):
       printTermDocumentMatrix(count_vect, counts)
     s = out.getvalue()
-      
+    print(pd.get_option('display.max_columns'))
     self.assertIn('S1  S2  S3', s)
     self.assertIn('first      1   0   0', s)
     self.assertIn('the        1   0   1', s)
