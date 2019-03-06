@@ -11,7 +11,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="dmba",
-    version="0.0.4",
+    version="0.0.5",
     author="Peter Gedeck",
     author_email="mail@petergedeck.com",
     description="Utility functions for 'Data Mining for Business Analytics: Concepts, Techniques, and Applications in Python'",
