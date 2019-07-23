@@ -6,6 +6,7 @@ Applications in Python"
 '''
 import io
 import pandas as pd
+import numpy as np
 from sklearn.tree import export_graphviz
 try:
   from IPython.display import Image
@@ -105,3 +106,43 @@ def plotDecisionTree(decisionTree, feature_names=None, class_names=None, impurit
         graph.write_pdf(str(pdfFile))
     return Image(graph.create_png())
 
+# Taken from scikit-learn documentation
+def textDecisionTree(decisionTree, indent='  ', as_ratio=True):
+    """ Create a text representation of the scikit-learn decision tree 
+    Input:
+        decisionTree: scikit-learn decision tree
+        as_ratio: show the composition of the leaf nodes as ratio (default) instead of counts 
+        indent: indentation (default two spaces)
+    """
+    n_nodes = decisionTree.tree_.node_count
+    children_left = decisionTree.tree_.children_left
+    children_right = decisionTree.tree_.children_right
+    feature = decisionTree.tree_.feature
+    threshold = decisionTree.tree_.threshold
+    node_value = decisionTree.tree_.value
+
+    node_depth = np.zeros(shape=n_nodes, dtype=np.int64)
+    is_leaves = np.zeros(shape=n_nodes, dtype=bool)
+    stack = [(0, -1)]  # seed is the root node id and its parent depth
+    while len(stack) > 0:
+        node_id, parent_depth = stack.pop()
+        node_depth[node_id] = parent_depth + 1
+        # If we have a test node
+        if (children_left[node_id] != children_right[node_id]):
+            stack.append((children_left[node_id], parent_depth + 1))
+            stack.append((children_right[node_id], parent_depth + 1))
+        else:
+            is_leaves[node_id] = True
+
+    rep = []
+    for i in range(n_nodes):
+        common = f'{node_depth[i] * indent}node={i}'
+        if is_leaves[i]:
+            value = node_value[i]
+            if as_ratio:
+              value = [[round(vi/sum(v), 3) for vi in v] for v in value]
+            rep.append(f'{common} leaf node: {value}')
+        else:
+            rule = f'{children_left[i]} if {feature[i]} <= {threshold[i]} else to node {children_right[i]}'
+            rep.append(f'{common} test node: go to node {rule}')
+    return '\n'.join(rep)

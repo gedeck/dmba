@@ -25,7 +25,6 @@ class TestTextMining(unittest.TestCase):
 
     pd.set_option('display.width', 100)
     pd.set_option('display.max_columns', 20)
-    print(pd.get_option('display.width'), pd.get_option('display.max_columns'))
     
     out = StringIO()
     with redirect_stdout(out):
