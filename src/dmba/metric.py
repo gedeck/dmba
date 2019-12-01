@@ -71,9 +71,12 @@ def regressionSummary(y_true, y_pred):
         ('Mean Error (ME)', sum(y_res) / len(y_res)),
         ('Root Mean Squared Error (RMSE)', math.sqrt(regression.mean_squared_error(y_true, y_pred))),
         ('Mean Absolute Error (MAE)', sum(abs(y_res)) / len(y_res)),
+    ]
+    if all(yt != 0 for yt in y_true):
+      metrics.extend([
         ('Mean Percentage Error (MPE)', 100 * sum(y_res / y_true) / len(y_res)),
         ('Mean Absolute Percentage Error (MAPE)', 100 * sum(abs(y_res / y_true) / len(y_res))),
-    ]
+      ])
     fmt1 = '{{:>{}}} : {{:.4f}}'.format(max(len(m[0]) for m in metrics))
     print('\nRegression statistics\n')
     for metric, value in metrics:
