@@ -6,7 +6,8 @@ Applications in Python"
 '''
 import math
 import numpy as np
-from sklearn.metrics import classification, regression
+from sklearn.metrics import r2_score, mean_squared_error
+from sklearn.metrics import confusion_matrix, accuracy_score
 
 
 def adjusted_r2_score(y_true, y_pred, model):
@@ -20,7 +21,7 @@ def adjusted_r2_score(y_true, y_pred, model):
     p = len(model.coef_)
     if p >= n - 1:
       return 0
-    r2 = regression.r2_score(y_true, y_pred)
+    r2 = r2_score(y_true, y_pred)
     return 1 - (1 - r2) * (n - 1) /(n - p - 1)
     
 def AIC_score(y_true, y_pred, model=None, df=None):
@@ -69,7 +70,7 @@ def regressionSummary(y_true, y_pred):
     y_res = y_true - y_pred
     metrics = [
         ('Mean Error (ME)', sum(y_res) / len(y_res)),
-        ('Root Mean Squared Error (RMSE)', math.sqrt(regression.mean_squared_error(y_true, y_pred))),
+        ('Root Mean Squared Error (RMSE)', math.sqrt(mean_squared_error(y_true, y_pred))),
         ('Mean Absolute Error (MAE)', sum(abs(y_res)) / len(y_res)),
     ]
     if all(yt != 0 for yt in y_true):
@@ -91,8 +92,8 @@ def classificationSummary(y_true, y_pred, class_names=None):
         y_pred: predicted values
         class_names (optional): list of class names
     """
-    confusionMatrix = classification.confusion_matrix(y_true, y_pred)
-    accuracy = classification.accuracy_score(y_true, y_pred)
+    confusionMatrix = confusion_matrix(y_true, y_pred)
+    accuracy = accuracy_score(y_true, y_pred)
 
     print('Confusion Matrix (Accuracy {:.4f})\n'.format(accuracy))
     

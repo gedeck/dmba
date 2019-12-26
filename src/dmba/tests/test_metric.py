@@ -9,7 +9,7 @@ from collections import namedtuple
 from contextlib import redirect_stdout
 from io import StringIO
 
-from sklearn.metrics.regression import r2_score
+from sklearn.metrics import r2_score
 
 from dmba import adjusted_r2_score, AIC_score, BIC_score
 from dmba import regressionSummary, classificationSummary
