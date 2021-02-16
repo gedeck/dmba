@@ -1,0 +1,9 @@
+FROM continuumio/miniconda3
+
+# RUN conda install -yq -c conda-forge rdkit=2020.09.1.0
+
+RUN pip install pytest pytest-watch pytest-testmon
+RUN pip install matplotlib pandas scikit-learn
+
+RUN mkdir /src
+WORKDIR /src

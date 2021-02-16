@@ -31,6 +31,9 @@ setuptools.setup(
     url="https://github.com/gedeck/dmba",
     packages=setuptools.find_packages("src"),
     package_dir={'': 'src'},
+    package_data={
+        "dmba": ["csvFiles/*.csv.gz"],
+    },
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
