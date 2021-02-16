@@ -1,3 +1,4 @@
-pandas==0.23.4
-scikit-learn==0.20.1
-matplotlib==2.2.3
+pandas
+scikit-learn
+matplotlib
+pytest

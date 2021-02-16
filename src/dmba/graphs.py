@@ -9,18 +9,18 @@ import pandas as pd
 import numpy as np
 from sklearn.tree import export_graphviz
 try:
-  from IPython.display import Image
+    from IPython.display import Image
 except ImportError:
-  Image = None
+    Image = None
 try:
-  import pydotplus
+    import pydotplus
 except ImportError:
-  pydotplus = None
+    pydotplus = None
 
 
 def liftChart(predicted, title='Decile Lift Chart', labelBars=True, ax=None, figsize=None):
     """ Create a lift chart using predicted values 
-    
+
     Input: 
         predictions: must be sorted by probability
         ax (optional): axis for matplotlib graph
@@ -47,9 +47,9 @@ def liftChart(predicted, title='Decile Lift Chart', labelBars=True, ax=None, fig
     return ax
 
 
-def gainsChart(gains, color=None, label=None, ax=None, figsize=None):
+def gainsChart(gains, color='C0', label=None, ax=None, figsize=None):
     """ Create a gains chart using predicted values 
-    
+
     Input: 
         gains: must be sorted by probability
         color (optional): color of graph
@@ -58,18 +58,13 @@ def gainsChart(gains, color=None, label=None, ax=None, figsize=None):
     """
     nTotal = len(gains)  # number of records
     nActual = gains.sum()  # number of desired records
-    
-    # get cumulative sum of gains and convert to percentage 
+
+    # get cumulative sum of gains and convert to percentage
     cumGains = pd.concat([pd.Series([0]), gains.cumsum()])  # Note the additional 0 at the front
     gains_df = pd.DataFrame({'records': list(range(len(gains) + 1)), 'cumGains': cumGains})
-    
-    # filled polygon shows the perfect model
-    # ax.fill([0, nActual, nTotal], [0, nActual, nActual], color='#eeeeee')
 
-    ax = gains_df.plot(x='records', y='cumGains', color=color, label=label, legend=False, 
+    ax = gains_df.plot(x='records', y='cumGains', color=color, label=label, legend=False,
                        ax=ax, figsize=figsize)
-    # Add line for perfect model
-    # ax.plot([0, nActual, nTotal], [0, nActual, nActual], linestyle='--', color='r')
 
     # Add line for random gain
     ax.plot([0, nTotal], [0, nActual], linestyle='--', color='k')
@@ -107,6 +102,8 @@ def plotDecisionTree(decisionTree, feature_names=None, class_names=None, impurit
     return Image(graph.create_png())
 
 # Taken from scikit-learn documentation
+
+
 def textDecisionTree(decisionTree, indent='  ', as_ratio=True):
     """ Create a text representation of the scikit-learn decision tree 
     Input:
@@ -140,7 +137,7 @@ def textDecisionTree(decisionTree, indent='  ', as_ratio=True):
         if is_leaves[i]:
             value = node_value[i]
             if as_ratio:
-              value = [[round(vi/sum(v), 3) for vi in v] for v in value]
+                value = [[round(vi / sum(v), 3) for vi in v] for v in value]
             rep.append(f'{common} leaf node: {value}')
         else:
             rule = f'{children_left[i]} if {feature[i]} <= {threshold[i]} else to node {children_right[i]}'
