@@ -2,6 +2,9 @@
 
 ## Changelog
 
+### 0.0.18 (2021-02-25)
+- replace 'AustralianWines.csv.gz' with correct version
+
 ### 0.0.17 (2021-02-25)
 - include file 'AutoAndElectronics.zip' in package
 
