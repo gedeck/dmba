@@ -32,7 +32,7 @@ setuptools.setup(
     packages=setuptools.find_packages("src"),
     package_dir={'': 'src'},
     package_data={
-        "dmba": ["csvFiles/*.csv.gz"],
+        "dmba": ["csvFiles/*.csv.gz", "csvFiles/*.zip"],
     },
     classifiers=[
         "Programming Language :: Python :: 3",

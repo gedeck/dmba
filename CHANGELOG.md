@@ -2,6 +2,9 @@
 
 ## Changelog
 
+### 0.0.17 (2021-02-25)
+- include file 'AutoAndElectronics.zip' in package
+
 ### 0.0.16 (2021-02-25)
 - expose method `get_data_file` to access files by name
 ```
