@@ -2,6 +2,14 @@
 
 ## Changelog
 
+### 0.0.15 (2021-02-25)
+- allow keyword arguments in `load_data`
+```
+import dmba
+data = dmba.load_data('gdp.csv', skiprows=4)
+print(data.shape)
+```
+
 ### 0.0.14 (2021-02-16)
 - Adapt gainsChart to work with pandas > 1.2.0 (#8)
 - Make `regressionSummary` to work with column and row vectors (#6) 

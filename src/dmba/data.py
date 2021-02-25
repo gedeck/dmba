@@ -11,12 +11,12 @@ import pandas as pd
 DATA_DIR = Path(__file__).parent / 'csvFiles'
 
 
-def load_data(name):
+def load_data(name, **kwargs):
     """ Returns the data either as a Pandas data frame or series """
     data_file = get_data_file(name)
     if not data_file.exists():
         raise ValueError('Data file {name} not found')
-    data = pd.read_csv(data_file)
+    data = pd.read_csv(data_file, **kwargs)
     if data.shape[1] == 1:
         return data[data.columns[0]]
     return data

@@ -34,3 +34,9 @@ class TestData(unittest.TestCase):
             else:
                 assert isinstance(data, pd.DataFrame)
                 assert data.shape[1] > 1
+
+    def test_kwargs_load_data(self):
+        df = dmba.load_data('gdp.csv')
+        org_length = len(df)
+        df = dmba.load_data('gdp.csv', skiprows=4)
+        assert org_length == len(df) + 4
