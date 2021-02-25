@@ -40,3 +40,8 @@ class TestData(unittest.TestCase):
         org_length = len(df)
         df = dmba.load_data('gdp.csv', skiprows=4)
         assert org_length == len(df) + 4
+
+    def test_get_data_file(self):
+        assert dmba.get_data_file('AutoAndElectronics.zip').exists()
+        assert dmba.get_data_file('gdp.csv').exists()
+        assert dmba.get_data_file('gdp.csv.gz').exists()

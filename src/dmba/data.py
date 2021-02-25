@@ -23,6 +23,8 @@ def load_data(name, **kwargs):
 
 
 def get_data_file(name):
+    if name.endswith('.zip'):
+        return DATA_DIR / name
     if name.endswith('.gz'):
         name = name[:-3]
     if name.endswith('.csv'):

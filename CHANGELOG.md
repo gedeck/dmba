@@ -2,6 +2,12 @@
 
 ## Changelog
 
+### 0.0.16 (2021-02-25)
+- expose method `get_data_file` to access files by name
+```
+with ZipFile(dmba.get_data_file('AutoAndElectronics.zip')) as rawData:
+```
+
 ### 0.0.15 (2021-02-25)
 - allow keyword arguments in `load_data`
 ```

@@ -17,4 +17,4 @@ from .graphs import plotDecisionTree, liftChart, gainsChart, textDecisionTree
 from .metric import regressionSummary, classificationSummary
 from .metric import AIC_score, BIC_score, adjusted_r2_score
 from .textMining import printTermDocumentMatrix
-from .data import load_data
+from .data import load_data, get_data_file
