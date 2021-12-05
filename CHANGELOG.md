@@ -2,6 +2,9 @@
 
 ## Changelog
 
+### 0.0.19 (2021-12-05)
+- Update code to latest version of packages addressing depracation warnings
+
 ### 0.0.18 (2021-02-25)
 - replace 'AustralianWines.csv.gz' with correct version
 
