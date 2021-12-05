@@ -11,11 +11,19 @@ bash:
 	@ $(RUN) bash
 
 tests:
-	@ $(RUN) pytest -p no:cacheprovider
+	@ $(RUN) pytest -rP -p no:cacheprovider
 
 watch-tests:
 	rm -f $(SRC)/.testmondata
 	@ $(RUN) ptw --runner "pytest -o cache_dir=/tmp --testmon --quiet -rP"
+
+PYLINT_IMAGE=dmba-pylint
+pylint:
+	docker build -t $(PYLINT_IMAGE) -f docker/Dockerfile.pylint .
+	@ docker run -it --rm -v $(PWD)/src:/src:ro $(PYLINT_IMAGE) dmba
+
+freeze:
+	docker run -it $(IMAGE) pip list --format=freeze | grep -v "^conda" > requirements.txt
 
 
 # Docker container

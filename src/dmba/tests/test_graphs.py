@@ -1,5 +1,5 @@
 '''
-Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and 
+Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
 (c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck

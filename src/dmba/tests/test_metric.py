@@ -1,8 +1,8 @@
 '''
-Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and 
+Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
-(c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck 
+(c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck
 '''
 import unittest
 from collections import namedtuple
@@ -133,3 +133,8 @@ class TestMetric(unittest.TestCase):
         self.assertIn('       Prediction', s)
         self.assertIn('a 1 1', s)
         self.assertIn('b 2 2', s)
+
+        lines = s.split('\n')
+        self.assertEqual(lines[0], 'Confusion Matrix (Accuracy 0.5000)')
+        self.assertEqual(lines[3], 'Actual a b')
+        self.assertEqual(lines[4], '     a 1 1')

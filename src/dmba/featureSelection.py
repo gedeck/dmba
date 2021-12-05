@@ -1,20 +1,20 @@
 '''
-Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and 
+Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
-(c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck 
+(c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck
 '''
 import itertools
 
 
 def exhaustive_search(variables, train_model, score_model):
-    """ Variable selection using backward elimination 
-    
+    """ Variable selection using backward elimination
+
     Input:
         variables: complete list of variables to consider in model building
         train_model: function that returns a fitted model for a given set of variables
         score_model: function that returns the score of a model; better models have lower scores
-    
+
     Returns:
         List of best subset models for increasing number of variables
     """
@@ -42,24 +42,24 @@ def exhaustive_search(variables, train_model, score_model):
 
 
 def backward_elimination(variables, train_model, score_model, verbose=False):
-    """ Variable selection using backward elimination 
-    
+    """ Variable selection using backward elimination
+
     Input:
         variables: complete list of variables to consider in model building
         train_model: function that returns a fitted model for a given set of variables
         score_model: function that returns the score of a model; better models have lower scores
-    
+
     Returns:
-        (best_model, best_variables) 
+        (best_model, best_variables)
     """
     # we start with a model that contains all variables
-    best_variables = list(variables)  
+    best_variables = list(variables)
     best_model = train_model(best_variables)
     best_score = score_model(best_model, best_variables)
     if verbose:
         print('Variables: ' + ', '.join(variables))
-        print('Start: score={:.2f}'.format(best_score))
-    
+        print(f'Start: score={best_score:.2f}')
+
     while len(best_variables) > 1:
         step = [(best_score, None, best_model)]
         for removeVar in best_variables:
@@ -75,7 +75,7 @@ def backward_elimination(variables, train_model, score_model, verbose=False):
         # the first entry is the model with the lowest score
         best_score, removed_step, best_model = step[0]
         if verbose:
-            print('Step: score={:.2f}, remove {}'.format(best_score, removed_step))
+            print(f'Step: score={best_score:.2f}, remove {removed_step}')
         if removed_step is None:
             # step here, as removing more variables is detrimental to performance
             break
@@ -84,15 +84,15 @@ def backward_elimination(variables, train_model, score_model, verbose=False):
 
 
 def forward_selection(variables, train_model, score_model, verbose=True):
-    """ Variable selection using forward selection 
-    
+    """ Variable selection using forward selection
+
     Input:
         variables: complete list of variables to consider in model building
         train_model: function that returns a fitted model for a given set of variables
         score_model: function that returns the score of a model; better models have lower scores
-    
+
     Returns:
-        (best_model, best_variables) 
+        (best_model, best_variables)
     """
     # we start with a model that contains no variables
     best_variables = []
@@ -100,7 +100,7 @@ def forward_selection(variables, train_model, score_model, verbose=True):
     best_score = score_model(best_model, best_variables)
     if verbose:
         print('Variables: ' + ', '.join(variables))
-        print('Start: score={:.2f}, constant'.format(best_score))
+        print(f'Start: score={best_score:.2f}, constant')
     while True:
         step = [(best_score, None, best_model)]
         for addVar in variables:
@@ -116,8 +116,8 @@ def forward_selection(variables, train_model, score_model, verbose=True):
         # the first entry in step is now the model that improved most
         best_score, added_step, best_model = step[0]
         if verbose:
-            print('Step: score={:.2f}, add {}'.format(best_score, added_step))
-        if added_step is None: 
+            print(f'Step: score={best_score:.2f}, add {added_step}')
+        if added_step is None:
             # stop here, as adding more variables is detrimental to performance
             break
         best_variables.append(added_step)
@@ -125,16 +125,16 @@ def forward_selection(variables, train_model, score_model, verbose=True):
 
 
 def stepwise_selection(variables, train_model, score_model, direction='both', verbose=True):
-    """ Variable selection using forward and/or backward selection 
-    
+    """ Variable selection using forward and/or backward selection
+
     Input:
         variables: complete list of variables to consider in model building
         train_model: function that returns a fitted model for a given set of variables
         score_model: function that returns the score of a model; better models have lower scores
         direction: use it to limit stepwise selection to either 'forward' or 'backward'
-    
+
     Returns:
-        (best_model, best_variables) 
+        (best_model, best_variables)
     """
     FORWARD = 'forward'
     BACKWARD = 'backward'
@@ -143,15 +143,15 @@ def stepwise_selection(variables, train_model, score_model, direction='both', ve
         directions = [FORWARD]
     if direction.lower() == BACKWARD:
         directions = [BACKWARD]
-    
+
     # we start with a model that contains no variables
     best_variables = [] if 'forward' in directions else list(variables)
     best_model = train_model(best_variables)
     best_score = score_model(best_model, best_variables)
     if verbose:
         print('Variables: ' + ', '.join(variables))
-        print('Start: score={:.2f}, constant'.format(best_score))
-    
+        print(f'Start: score={best_score:.2f}, constant')
+
     while True:
         step = [(best_score, None, best_model, 'unchanged')]
         if FORWARD in directions:
@@ -178,12 +178,12 @@ def stepwise_selection(variables, train_model, score_model, direction='both', ve
         # the first entry is the model with the lowest score
         best_score, chosen_variable, best_model, direction = step[0]
         if verbose:
-            print('Step: score={:.2f}, {} {}'.format(best_score, direction, chosen_variable))
+            print(f'Step: score={best_score:.2f}, {direction} {chosen_variable}')
         if chosen_variable is None:
             # step here, as adding or removing more variables is detrimental to performance
             break
         if direction == 'add':
             best_variables.append(chosen_variable)
         else:
-            best_variables.remove(chosen_variable)   
+            best_variables.remove(chosen_variable)
     return best_model, best_variables

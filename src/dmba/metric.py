@@ -1,5 +1,5 @@
 '''
-Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and 
+Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
 (c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck
@@ -26,7 +26,7 @@ def adjusted_r2_score(y_true, y_pred, model):
 
 
 def AIC_score(y_true, y_pred, model=None, df=None):
-    """ calculate Akaike Information Criterion (AIC) 
+    """ calculate Akaike Information Criterion (AIC)
     Input:
         y_true: actual values
         y_pred: predicted values
@@ -46,7 +46,7 @@ def AIC_score(y_true, y_pred, model=None, df=None):
 
 
 def BIC_score(y_true, y_pred, model=None, df=None):
-    """ calculate Schwartz's Bayesian Information Criterion (AIC) 
+    """ calculate Schwartz's Bayesian Information Criterion (AIC)
     Input:
         y_true: actual values
         y_pred: predicted values
@@ -60,7 +60,7 @@ def BIC_score(y_true, y_pred, model=None, df=None):
 
 
 def regressionSummary(y_true, y_pred):
-    """ print regression performance metrics 
+    """ print regression performance metrics
 
     Input:
         y_true: actual values
@@ -79,7 +79,8 @@ def regressionSummary(y_true, y_pred):
             ('Mean Percentage Error (MPE)', 100 * sum(y_res / y_true) / len(y_res)),
             ('Mean Absolute Percentage Error (MAPE)', 100 * sum(abs(y_res / y_true) / len(y_res))),
         ])
-    fmt1 = '{{:>{}}} : {{:.4f}}'.format(max(len(m[0]) for m in metrics))
+    maxlength = max(len(m[0]) for m in metrics)
+    fmt1 = f'{{:>{maxlength}}} : {{:.4f}}'
     print('\nRegression statistics\n')
     for metric, value in metrics:
         print(fmt1.format(metric, value))
@@ -103,7 +104,7 @@ def classificationSummary(y_true, y_pred, class_names=None):
     confusionMatrix = confusion_matrix(y_true, y_pred)
     accuracy = accuracy_score(y_true, y_pred)
 
-    print('Confusion Matrix (Accuracy {:.4f})\n'.format(accuracy))
+    print(f'Confusion Matrix (Accuracy {accuracy:.4f})\n')
 
     # Pretty-print confusion matrix
     cm = confusionMatrix
@@ -124,8 +125,8 @@ def classificationSummary(y_true, y_pred, class_names=None):
     labelWidth = max(labelWidth, len(actual))
 
     # Construct the format statements
-    fmt1 = '{{:>{}}}'.format(labelWidth)
-    fmt2 = '{{:>{}}}'.format(cmWidth) * len(labels)
+    fmt1 = f'{{:>{labelWidth}}}'
+    fmt2 = f'{{:>{cmWidth}}}' * len(labels)
 
     # And print the confusion matrix
     print(fmt1.format(' ') + ' ' + prediction)

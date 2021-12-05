@@ -18,7 +18,7 @@ def load_data(name, **kwargs):
         raise ValueError('Data file {name} not found')
     data = pd.read_csv(data_file, **kwargs)
     if data.shape[1] == 1:
-        return data[data.columns[0]]
+        return data[data.columns[0]]  # pylint: disable=E1136
     return data
 
 

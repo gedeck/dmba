@@ -1,8 +1,8 @@
 '''
-Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and 
+Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
-(c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck 
+(c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck
 '''
 import io
 import pandas as pd
@@ -19,13 +19,13 @@ except ImportError:
 
 
 def liftChart(predicted, title='Decile Lift Chart', labelBars=True, ax=None, figsize=None):
-    """ Create a lift chart using predicted values 
+    """ Create a lift chart using predicted values
 
-    Input: 
+    Input:
         predictions: must be sorted by probability
         ax (optional): axis for matplotlib graph
         title (optional): set to None to suppress title
-        labelBars (optional): set to False to avoid mean response labels on bar chart 
+        labelBars (optional): set to False to avoid mean response labels on bar chart
     """
     # group the sorted predictions into 10 roughly equal groups and calculate the mean
     groups = [int(10 * i / len(predicted)) for i in range(len(predicted))]
@@ -43,14 +43,14 @@ def liftChart(predicted, title='Decile Lift Chart', labelBars=True, ax=None, fig
 
     if labelBars:
         for p in ax.patches:
-            ax.annotate('{:.1f}'.format(p.get_height()), (p.get_x(), p.get_height() + 0.1))
+            ax.annotate(f'{p.get_height():.1f}', (p.get_x(), p.get_height() + 0.1))
     return ax
 
 
 def gainsChart(gains, color='C0', label=None, ax=None, figsize=None):
-    """ Create a gains chart using predicted values 
+    """ Create a gains chart using predicted values
 
-    Input: 
+    Input:
         gains: must be sorted by probability
         color (optional): color of graph
         ax (optional): axis for matplotlib graph
@@ -73,16 +73,17 @@ def gainsChart(gains, color='C0', label=None, ax=None, figsize=None):
     return ax
 
 
-def plotDecisionTree(decisionTree, feature_names=None, class_names=None, impurity=False, label='root',
-                     max_depth=None, rotate=False, pdfFile=None):
-    """ Create a plot of the scikit-learn decision tree and show in the Jupyter notebooke 
+def plotDecisionTree(decisionTree, feature_names=None, class_names=None, impurity=False,  # pylint: disable=R0913
+                     label='root', max_depth=None, rotate=False, pdfFile=None):
+    """ Create a plot of the scikit-learn decision tree and show in the Jupyter notebook
+
     Input:
         decisionTree: scikit-learn decision tree
         feature_names (optional): variable names
         class_names (optional): class names, only relevant for classification trees
         impurity (optional): show node impurity
         label (optional): only show labels at the root
-        max_depth (optional): limit 
+        max_depth (optional): limit
         rotate (optional): rotate the layout of the graph
         pdfFile (optional): provide pathname to create a PDF file of the graph
     """
@@ -105,10 +106,11 @@ def plotDecisionTree(decisionTree, feature_names=None, class_names=None, impurit
 
 
 def textDecisionTree(decisionTree, indent='  ', as_ratio=True):
-    """ Create a text representation of the scikit-learn decision tree 
+    """ Create a text representation of the scikit-learn decision tree
+
     Input:
         decisionTree: scikit-learn decision tree
-        as_ratio: show the composition of the leaf nodes as ratio (default) instead of counts 
+        as_ratio: show the composition of the leaf nodes as ratio (default) instead of counts
         indent: indentation (default two spaces)
     """
     n_nodes = decisionTree.tree_.node_count
@@ -125,7 +127,7 @@ def textDecisionTree(decisionTree, indent='  ', as_ratio=True):
         node_id, parent_depth = stack.pop()
         node_depth[node_id] = parent_depth + 1
         # If we have a test node
-        if (children_left[node_id] != children_right[node_id]):
+        if children_left[node_id] != children_right[node_id]:
             stack.append((children_left[node_id], parent_depth + 1))
             stack.append((children_right[node_id], parent_depth + 1))
         else:

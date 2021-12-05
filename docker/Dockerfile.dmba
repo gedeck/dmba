@@ -1,7 +1,8 @@
-FROM python:3.10
-# FROM continuumio/miniconda3
+FROM python:3.10-slim
+RUN apt-get update 
+RUN apt -y install build-essential
 
-# RUN conda install -yq -c conda-forge rdkit=2020.09.1.0
+RUN apt-get update 
 
 RUN pip install pytest pytest-watch pytest-testmon
 RUN pip install matplotlib pandas scikit-learn
