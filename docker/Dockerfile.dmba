@@ -1,4 +1,5 @@
-FROM continuumio/miniconda3
+FROM python:3.10
+# FROM continuumio/miniconda3
 
 # RUN conda install -yq -c conda-forge rdkit=2020.09.1.0
 

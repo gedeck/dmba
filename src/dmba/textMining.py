@@ -16,4 +16,4 @@ def printTermDocumentMatrix(count_vect, counts):
     shape = counts.shape
     columns = ['S{}'.format(i) for i in range(1, shape[0] + 1)]
     print(pd.DataFrame(data=counts.toarray().transpose(),
-                       index=count_vect.get_feature_names(), columns=columns))
+                       index=count_vect.get_feature_names_out(), columns=columns))
