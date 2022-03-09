@@ -6,12 +6,13 @@ SRC=src
 # Django server
 IMAGE=dmba
 RUN=docker run -it --rm -v $(PWD):/code -v $(PWD)/$(SRC):/src $(IMAGE) 
+RUN_NOTERM=docker run -i --rm -v $(PWD):/code -v $(PWD)/$(SRC):/src $(IMAGE) 
 
 bash:
 	@ $(RUN) bash
 
 tests:
-	@ $(RUN) pytest -rP -p no:cacheprovider
+	@ $(RUN_NOTERM) pytest -rP -p no:cacheprovider
 
 watch-tests:
 	rm -f $(SRC)/.testmondata
