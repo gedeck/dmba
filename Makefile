@@ -6,13 +6,12 @@ SRC=src
 # Django server
 IMAGE=dmba
 RUN=docker run -it --rm -v $(PWD):/code -v $(PWD)/$(SRC):/src $(IMAGE) 
-RUN_NOTERM=docker run -i --rm -v $(PWD):/code -v $(PWD)/$(SRC):/src $(IMAGE) 
 
 bash:
 	@ $(RUN) bash
 
 tests:
-	@ $(RUN_NOTERM) pytest -rP -p no:cacheprovider
+	@ $(RUN) pytest -rP -p no:cacheprovider
 
 watch-tests:
 	rm -f $(SRC)/.testmondata
@@ -28,8 +27,12 @@ freeze:
 
 
 # Docker container
-build: images
+build: touch-docker docker/image.dmba
 
-images:
+touch-docker:
+	touch docker/Dockerfile.dmba
+
+docker/image.dmba: docker/Dockerfile.dmba
 	docker build -t $(IMAGE) -f docker/Dockerfile.dmba .
+	@ touch $@
 
