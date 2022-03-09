@@ -1,4 +1,4 @@
-name: dmba-tests-versions
+name: Tests
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
