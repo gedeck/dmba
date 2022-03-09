@@ -30,4 +30,5 @@ jobs:
         with:
           python-version: '3.10'
       - run: pip install --upgrade pip pylint matplotlib pandas scikit-learn
-      - run: pylint src
+      - run: cd src
+      - run: pylint .
