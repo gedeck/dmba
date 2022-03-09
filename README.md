@@ -1,3 +1,6 @@
+![Versions](https://shields.io/pypi/pyversions/dmba)
+![Python](https://github.com/gedeck/dmba/actions/workflows/build.yml/badge.svg)
+
 # Data Mining for Business Analytics: Concepts, Techniques, and  Applications in Python
 
 Collection of utility functions used in the book
