@@ -17,3 +17,5 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: python --version
+      - run: pip install --upgrade pip pytest pytest-watch pytest-testmon matplotlib pandas scikit-learn
+      - run: pytest -rP -p no:cacheprovider
