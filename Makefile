@@ -27,12 +27,8 @@ freeze:
 
 
 # Docker container
-build: touch-docker docker/image.dmba
+build: images
 
-touch-docker:
-	touch docker/Dockerfile.dmba
-
-docker/image.dmba: docker/Dockerfile.dmba
+images:
 	docker build -t $(IMAGE) -f docker/Dockerfile.dmba .
-	@ touch $@
 
