@@ -1,4 +1,5 @@
 ![Python](https://github.com/gedeck/dmba/actions/workflows/dmba-tests-versions.yml/badge.svg)
+![Versions](https://shields.io/github/pipenv/locked/python-version/gedeck/dmba)
 
 # Data Mining for Business Analytics: Concepts, Techniques, and  Applications in Python
 
