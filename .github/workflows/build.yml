@@ -1,4 +1,4 @@
-name: Tests
+name: build
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
