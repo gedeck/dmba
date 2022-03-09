@@ -2,7 +2,7 @@ name: dmba-tests
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
-on: [workflow_dispatch]
+on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
