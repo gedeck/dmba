@@ -1,4 +1,4 @@
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/dmba)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/dmba)](https://pypi.org/project/dmba/)
 ![Python](https://github.com/gedeck/dmba/actions/workflows/build.yml/badge.svg)
 
 # Data Mining for Business Analytics: Concepts, Techniques, and  Applications in Python
