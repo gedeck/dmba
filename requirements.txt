@@ -28,4 +28,4 @@ six==1.16.0
 threadpoolctl==3.0.0
 toml==0.10.2
 watchdog==2.1.6
-wheel==0.37.0
+wheel==0.38.1
