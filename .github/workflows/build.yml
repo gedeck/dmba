@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: python --version
-      - run: pip install --upgrade pip pytest matplotlib pandas scikit-learn graphviz
+      - run: pip install --upgrade pip pytest matplotlib pandas scikit-learn graphviz jupyter
       - run: pytest -rP -p no:cacheprovider
 
   ruff:
