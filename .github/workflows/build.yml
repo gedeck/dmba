@@ -16,6 +16,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - run: apt install -y graphviz
       - run: python --version
       - run: pip install --upgrade pip pytest matplotlib pandas scikit-learn graphviz jupyter
       - run: pytest -rP -p no:cacheprovider
