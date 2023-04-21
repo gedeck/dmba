@@ -5,20 +5,30 @@ Applications in Python"
 (c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck
 '''
 import io
-import pandas as pd
+import os
+from tempfile import TemporaryDirectory
+from typing import Any, List, Optional, Union
+
 import numpy as np
+import pandas as pd
 from sklearn.tree import export_graphviz
+
+hasImage = False
 try:
     from IPython.display import Image
+    hasImage = True
 except ImportError:
-    Image = None
+    pass
+hasGraphviz = False
 try:
-    import pydotplus
+    import graphviz
+    hasGraphviz = True
 except ImportError:
-    pydotplus = None
+    pass
 
 
-def liftChart(predicted, title='Decile Lift Chart', labelBars=True, ax=None, figsize=None):
+def liftChart(predicted: pd.Series, *, title: str = 'Decile Lift Chart', labelBars: bool = True,
+              ax: Any = None, figsize: Any = None) -> Any:
     """ Create a lift chart using predicted values
 
     Input:
@@ -31,7 +41,7 @@ def liftChart(predicted, title='Decile Lift Chart', labelBars=True, ax=None, fig
     groups = [int(10 * i / len(predicted)) for i in range(len(predicted))]
     meanPercentile = predicted.groupby(groups).mean()
     # divide by the mean prediction to get the mean response
-    meanResponse = meanPercentile / predicted.mean()
+    meanResponse = meanPercentile / predicted.mean()  # type: ignore
     meanResponse.index = (meanResponse.index + 1) * 10
 
     ax = meanResponse.plot.bar(color='C0', ax=ax, figsize=figsize)
@@ -47,7 +57,8 @@ def liftChart(predicted, title='Decile Lift Chart', labelBars=True, ax=None, fig
     return ax
 
 
-def gainsChart(gains, color='C0', label=None, ax=None, figsize=None):
+def gainsChart(gains: pd.Series, color: str = 'C0', label: Optional[str] = None,
+               ax: Any = None, figsize: Any = None) -> Any:
     """ Create a gains chart using predicted values
 
     Input:
@@ -73,8 +84,10 @@ def gainsChart(gains, color='C0', label=None, ax=None, figsize=None):
     return ax
 
 
-def plotDecisionTree(decisionTree, feature_names=None, class_names=None, impurity=False,  # pylint: disable=R0913
-                     label='root', max_depth=None, rotate=False, pdfFile=None):
+def plotDecisionTree(decisionTree: Any, *, feature_names: Optional[List[str]] = None,
+                     class_names: Optional[List[str]] = None, impurity: bool = False,
+                     label: str = 'root', max_depth: Optional[int] = None, rotate: bool = False,
+                     pdfFile: Optional[os.PathLike] = None) -> Union[Image, str]:
     """ Create a plot of the scikit-learn decision tree and show in the Jupyter notebook
 
     Input:
@@ -87,9 +100,9 @@ def plotDecisionTree(decisionTree, feature_names=None, class_names=None, impurit
         rotate (optional): rotate the layout of the graph
         pdfFile (optional): provide pathname to create a PDF file of the graph
     """
-    if pydotplus is None:
-        return 'You need to install pydotplus to visualize decision trees'
-    if Image is None:
+    if not hasGraphviz:
+        return 'You need to install graphviz to visualize decision trees'
+    if not hasImage:
         return 'You need to install ipython to visualize decision trees'
     if class_names is not None:
         class_names = [str(s) for s in class_names]  # convert to strings
@@ -97,15 +110,16 @@ def plotDecisionTree(decisionTree, feature_names=None, class_names=None, impurit
     export_graphviz(decisionTree, feature_names=feature_names, class_names=class_names, impurity=impurity,
                     label=label, out_file=dot_data, filled=True, rounded=True, special_characters=True,
                     max_depth=max_depth, rotate=rotate)
-    graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
+    graph = graphviz.Source(dot_data.getvalue())
     if pdfFile is not None:
-        graph.write_pdf(str(pdfFile))
-    return Image(graph.create_png())
+        with TemporaryDirectory() as tempdir:
+            graph.render('dot', directory=tempdir, format='pdf', outfile=pdfFile)
+    return Image(graph)
 
 # Taken from scikit-learn documentation
 
 
-def textDecisionTree(decisionTree, indent='  ', as_ratio=True):
+def textDecisionTree(decisionTree: Any, indent: str = '  ', as_ratio: bool = True) -> str:  # noqa: FBT
     """ Create a text representation of the scikit-learn decision tree
 
     Input:

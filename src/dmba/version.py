@@ -4,4 +4,4 @@ Applications in Python"
 
 (c) 2019-2022 Galit Shmueli, Peter C. Bruce, Peter Gedeck
 '''
-__version__ = '0.1.0'
+__version__ = '0.2'

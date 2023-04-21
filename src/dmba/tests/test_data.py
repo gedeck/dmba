@@ -4,18 +4,18 @@ Applications in Python"
 
 (c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck
 '''
-from pathlib import Path
 import unittest
+from pathlib import Path
 
+import pandas as pd
 import pytest
 
-from dmba.data import DATA_DIR
 import dmba
-import pandas as pd
+from dmba.data import DATA_DIR
 
 
 class TestData(unittest.TestCase):
-    def test_load_data(self):
+    def test_load_data(self) -> None:
         with pytest.raises(ValueError):
             dmba.load_data('unknown data file')
 
@@ -23,7 +23,7 @@ class TestData(unittest.TestCase):
             data = dmba.load_data(name)
             assert isinstance(data, pd.DataFrame)
 
-    def test_load_data_all(self):
+    def test_load_data_all(self) -> None:
         for name in Path(DATA_DIR).glob('*.csv.gz'):
             data = dmba.load_data(name.name)
             assert isinstance(data, (pd.Series, pd.DataFrame))
@@ -35,13 +35,13 @@ class TestData(unittest.TestCase):
                 assert isinstance(data, pd.DataFrame)
                 assert data.shape[1] > 1
 
-    def test_kwargs_load_data(self):
+    def test_kwargs_load_data(self) -> None:
         df = dmba.load_data('gdp.csv')
         org_length = len(df)
         df = dmba.load_data('gdp.csv', skiprows=4)
         assert org_length == len(df) + 4
 
-    def test_get_data_file(self):
+    def test_get_data_file(self) -> None:
         assert dmba.get_data_file('AutoAndElectronics.zip').exists()
         assert dmba.get_data_file('gdp.csv').exists()
         assert dmba.get_data_file('gdp.csv.gz').exists()

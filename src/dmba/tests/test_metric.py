@@ -9,17 +9,16 @@ from collections import namedtuple
 from contextlib import redirect_stdout
 from io import StringIO
 
+import pytest
 from sklearn.metrics import r2_score
 
-from dmba import adjusted_r2_score, AIC_score, BIC_score
-from dmba import regressionSummary, classificationSummary
+from dmba import AIC_score, BIC_score, adjusted_r2_score, classificationSummary, regressionSummary
 
-
-MockModel = namedtuple('Model', 'coef_')
+MockModel = namedtuple('MockModel', 'coef_')
 
 
 class TestMetric(unittest.TestCase):
-    def test_adjusted_r2_score(self):
+    def test_adjusted_r2_score(self) -> None:
         y_true = [1, 2, 3, 4, 5]
         y_pred = [1, 3, 2, 5, 4]
 
@@ -30,54 +29,41 @@ class TestMetric(unittest.TestCase):
             n = len(y_true)
             f = (n - 1) / (n - df - 1)
             expected = 1 - (1 - r2) * f
-            self.assertAlmostEqual(
-                adjusted_r2_score(y_true, y_pred, MockModel(coef_=[1] * df)),
-                expected, places=3, msg=f'failed for df={df}')
+            assert (adjusted_r2_score(y_true, y_pred, MockModel(coef_=[1] * df)) ==
+                    pytest.approx(expected)), f'failed for df={df}'
 
         # if degree of freedom gets too large returns 0
         coef = [1] * 4
-        self.assertAlmostEqual(
-            adjusted_r2_score(y_true, y_pred, MockModel(coef_=coef)),
-            0, places=3, msg=f'failed for df={df}')
+        assert (adjusted_r2_score(y_true, y_pred, MockModel(coef_=coef)) ==
+                pytest.approx(0)), 'failed for too many degree of freedom'
 
         coef = [1] * 5
-        self.assertAlmostEqual(
-            adjusted_r2_score(y_true, y_pred, MockModel(coef_=coef)),
-            0, places=3, msg=f'failed for df={df}')
+        assert (adjusted_r2_score(y_true, y_pred, MockModel(coef_=coef)) ==
+                pytest.approx(0)), 'failed for too many degree of freedom'
 
-    def test_AIC_score(self):
+    def test_AIC_score(self) -> None:
         y_true = [1, 2, 3, 4, 5]
         y_pred = [1, 3, 2, 5, 4]
 
-        self.assertAlmostEqual(
-            AIC_score(y_true, y_pred, MockModel(coef_=[1] * 2)),
-            21.0736, places=3)
+        assert AIC_score(y_true, y_pred, MockModel(coef_=[1] * 2)) == pytest.approx(21.0736675)
 
-        self.assertAlmostEqual(
-            AIC_score(y_true, y_pred, df=3),
-            AIC_score(y_true, y_pred, MockModel(coef_=[1] * 2)), places=3)
+        assert (AIC_score(y_true, y_pred, df=3) ==
+                pytest.approx(AIC_score(y_true, y_pred, MockModel(coef_=[1] * 2))))
 
-        self.assertGreater(
-            AIC_score(y_true, y_pred, df=3),
-            AIC_score(y_true, y_pred, df=2))
+        assert AIC_score(y_true, y_pred, df=3) > AIC_score(y_true, y_pred, df=2)
 
-    def test_BIC_score(self):
+    def test_BIC_score(self) -> None:
         y_true = [1, 2, 3, 4, 5]
         y_pred = [1, 3, 2, 5, 4]
 
-        self.assertAlmostEqual(
-            BIC_score(y_true, y_pred, MockModel(coef_=[1] * 2)),
-            19.51141, places=3)
+        assert BIC_score(y_true, y_pred, MockModel(coef_=[1] * 2)) == pytest.approx(19.51141)
 
-        self.assertAlmostEqual(
-            BIC_score(y_true, y_pred, df=3),
-            BIC_score(y_true, y_pred, MockModel(coef_=[1] * 2)), places=3)
+        assert (BIC_score(y_true, y_pred, df=3) ==
+                BIC_score(y_true, y_pred, MockModel(coef_=[1] * 2)))
 
-        self.assertGreater(
-            BIC_score(y_true, y_pred, df=3),
-            BIC_score(y_true, y_pred, df=2))
+        assert BIC_score(y_true, y_pred, df=3) > BIC_score(y_true, y_pred, df=2)
 
-    def test_regressionSummary(self):
+    def test_regressionSummary(self) -> None:
         y_true = [1, 2, 3, 4, 5]
         y_pred = [1, 3, 2, 5, 4]
 
@@ -85,12 +71,12 @@ class TestMetric(unittest.TestCase):
         with redirect_stdout(out):
             regressionSummary(y_true, y_pred)
         s = out.getvalue()
-        self.assertIn('Regression statistics', s)
-        self.assertIn('(ME) : 0.0000', s)
-        self.assertIn('(RMSE) : 0.8944', s)
-        self.assertIn('(MAE) : 0.8000', s)
-        self.assertIn('(MPE) : -4.3333', s)
-        self.assertIn('(MAPE) : 25.6667', s)
+        assert 'Regression statistics' in s
+        assert '(ME) : 0.0000' in s
+        assert '(RMSE) : 0.8944' in s
+        assert '(MAE) : 0.8000' in s
+        assert '(MPE) : -4.3333' in s
+        assert '(MAPE) : 25.6667' in s
 
         y_true = [0, 1, 2, 3, 4]
         y_pred = [0, 2, 1, 4, 3]
@@ -99,13 +85,14 @@ class TestMetric(unittest.TestCase):
         with redirect_stdout(out):
             regressionSummary(y_true, y_pred)
         s = out.getvalue()
-        self.assertIn('Regression statistics', s)
-        self.assertIn('(ME) : 0.0000', s)
-        self.assertIn('(RMSE) : 0.8944', s)
-        self.assertIn('(MAE) : 0.8000', s)
-        self.assertNotIn('(MPE)', s)
-        self.assertNotIn('(MAPE)', s)
+        assert 'Regression statistics' in s
+        assert '(ME) : 0.0000' in s
+        assert '(RMSE) : 0.8944' in s
+        assert '(MAE) : 0.8000' in s
+        assert '(MPE)' not in s
+        assert '(MAPE)' not in s
 
+    def test_regressionSummary2(self) -> None:
         y_true = [[1], [2], [3], [4], [5]]
         y_pred = [[1], [3], [2], [5], [4]]
 
@@ -113,14 +100,14 @@ class TestMetric(unittest.TestCase):
         with redirect_stdout(out):
             regressionSummary(y_true, y_pred)
         s = out.getvalue()
-        self.assertIn('Regression statistics', s)
-        self.assertIn('(ME) : 0.0000', s)
-        self.assertIn('(RMSE) : 0.8944', s)
-        self.assertIn('(MAE) : 0.8000', s)
-        self.assertIn('(MPE) : -4.3333', s)
-        self.assertIn('(MAPE) : 25.6667', s)
+        assert 'Regression statistics' in s
+        assert '(ME) : 0.0000' in s
+        assert '(RMSE) : 0.8944' in s
+        assert '(MAE) : 0.8000' in s
+        assert '(MPE) : -4.3333' in s
+        assert '(MAPE) : 25.6667' in s
 
-    def test_classificationSummary(self):
+    def test_classificationSummary(self) -> None:
         y_true = [1, 0, 0, 1, 1, 1]
         y_pred = [1, 0, 1, 1, 0, 0]
 
@@ -129,12 +116,12 @@ class TestMetric(unittest.TestCase):
             classificationSummary(y_true, y_pred, class_names=['a', 'b'])
         s = out.getvalue()
 
-        self.assertIn('Confusion Matrix', s)
-        self.assertIn('       Prediction', s)
-        self.assertIn('a 1 1', s)
-        self.assertIn('b 2 2', s)
+        assert 'Confusion Matrix' in s
+        assert '       Prediction' in s
+        assert 'a 1 1' in s
+        assert 'b 2 2' in s
 
         lines = s.split('\n')
-        self.assertEqual(lines[0], 'Confusion Matrix (Accuracy 0.5000)')
-        self.assertEqual(lines[3], 'Actual a b')
-        self.assertEqual(lines[4], '     a 1 1')
+        assert lines[0] == 'Confusion Matrix (Accuracy 0.5000)'
+        assert lines[3] == 'Actual a b'
+        assert lines[4] == '     a 1 1'

@@ -5,14 +5,15 @@ Applications in Python"
 (c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck
 '''
 import os
+
 import matplotlib as mpl
-from .version import __version__
-from .featureSelection import exhaustive_search, forward_selection, backward_elimination, stepwise_selection
-from .graphs import plotDecisionTree, liftChart, gainsChart, textDecisionTree
-from .metric import regressionSummary, classificationSummary
-from .metric import AIC_score, BIC_score, adjusted_r2_score
+
+from .data import get_data_file, load_data
+from .featureSelection import backward_elimination, exhaustive_search, forward_selection, stepwise_selection
+from .graphs import gainsChart, liftChart, plotDecisionTree, textDecisionTree
+from .metric import AIC_score, BIC_score, adjusted_r2_score, classificationSummary, regressionSummary
 from .textMining import printTermDocumentMatrix
-from .data import load_data, get_data_file
+from .version import __version__
 
 if os.environ.get('DISPLAY', '') == '' and os.name != 'nt':
     print('no display found. Using non-interactive Agg backend')
