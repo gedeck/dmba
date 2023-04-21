@@ -11,7 +11,7 @@ tests:
 
 watch-tests:
 	rm -f .testmondata
-	docker run -it --rm -v $(PWD):/code $(DMBA_DEV) ptw --runner "pytest"
+	docker run -it --rm -v $(PWD):/code $(DMBA_DEV) ptw --runner "pytest --testmon"
 	rm -f .testmondata
 
 isort:

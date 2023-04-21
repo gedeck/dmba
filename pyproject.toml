@@ -49,7 +49,7 @@ target-version = "py38"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--testmon -rP"
+addopts = "-rP"
 testpaths = [
     "src"
   ]
