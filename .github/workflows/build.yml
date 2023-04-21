@@ -29,6 +29,6 @@ jobs:
         with:
           python-version: "3.7"
       - name: Install dependencies
-        run: make install-ruff
+        run: pip install ruff
       - name: Run ruff
         run: cd ./src && ruff .
