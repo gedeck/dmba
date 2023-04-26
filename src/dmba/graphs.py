@@ -13,12 +13,6 @@ import numpy as np
 import pandas as pd
 from sklearn.tree import export_graphviz
 
-hasImage = False
-try:
-    from IPython.display import Image
-    hasImage = True
-except ImportError:
-    pass
 hasGraphviz = False
 try:
     import graphviz
@@ -87,7 +81,7 @@ def gainsChart(gains: pd.Series, color: str = 'C0', label: Optional[str] = None,
 def plotDecisionTree(decisionTree: Any, *, feature_names: Optional[List[str]] = None,
                      class_names: Optional[List[str]] = None, impurity: bool = False,
                      label: str = 'root', max_depth: Optional[int] = None, rotate: bool = False,
-                     pdfFile: Optional[os.PathLike] = None) -> Union[Image, str]:
+                     pdfFile: Optional[os.PathLike] = None) -> Union[graphviz.Source, str]:
     """ Create a plot of the scikit-learn decision tree and show in the Jupyter notebook
 
     Input:
@@ -102,8 +96,6 @@ def plotDecisionTree(decisionTree: Any, *, feature_names: Optional[List[str]] = 
     """
     if not hasGraphviz:
         return 'You need to install graphviz to visualize decision trees'
-    if not hasImage:
-        return 'You need to install ipython to visualize decision trees'
     if class_names is not None:
         class_names = [str(s) for s in class_names]  # convert to strings
     dot_data = io.StringIO()

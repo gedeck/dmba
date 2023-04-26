@@ -18,7 +18,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: sudo apt install -y graphviz
       - run: python --version
-      - run: pip install --upgrade pip pytest matplotlib pandas scikit-learn graphviz jupyter
+      - run: pip install --upgrade pip pytest matplotlib pandas scikit-learn graphviz
       - run: pytest -rP -p no:cacheprovider
 
   ruff:
