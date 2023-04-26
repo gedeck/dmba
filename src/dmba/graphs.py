@@ -114,7 +114,7 @@ def plotDecisionTree(decisionTree: Any, *, feature_names: Optional[List[str]] = 
     if pdfFile is not None:
         with TemporaryDirectory() as tempdir:
             graph.render('dot', directory=tempdir, format='pdf', outfile=pdfFile)
-    return Image(graph)
+    return graph
 
 # Taken from scikit-learn documentation
 

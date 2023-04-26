@@ -7,6 +7,7 @@ Applications in Python"
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
+import graphviz
 
 import pandas as pd
 from IPython.display import Image
@@ -56,7 +57,7 @@ class TestGraphs(unittest.TestCase):
         estimator.fit(X_train, y_train)
 
         representation = plotDecisionTree(estimator)
-        assert type(representation) == Image
+        assert type(representation) == graphviz.sources.Source
 
         with TemporaryDirectory() as tempdir:
             pdfFile = Path(tempdir) / 'tree.pdf'
