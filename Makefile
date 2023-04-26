@@ -1,38 +1,35 @@
-
-
-# 
 SRC=src
+DMBA_BASE=dmba-base
+DMBA_DEV=dmba-dev
 
-# Django server
-IMAGE=dmba
-RUN=docker run -it --rm -v $(PWD):/code -v $(PWD)/$(SRC):/src $(IMAGE) 
 
 bash:
-	@ $(RUN) bash
+	docker run -it --rm -v $(PWD):/code $(DMBA_BASE) bash
 
 tests:
-	@ $(RUN) pytest -rP -p no:cacheprovider
+	docker run -it --rm -v $(PWD):/code $(DMBA_DEV) pytest src
 
 watch-tests:
-	rm -f $(SRC)/.testmondata
-	@ $(RUN) ptw --runner "pytest -o cache_dir=/tmp --testmon --quiet -rP"
+	rm -f .testmondata
+	docker run -it --rm -v $(PWD):/code $(DMBA_DEV) ptw --runner "pytest --testmon"
+	rm -f .testmondata
 
-PYLINT_IMAGE=dmba-pylint
-pylint:
-	docker build -t $(PYLINT_IMAGE) -f docker/Dockerfile.pylint .
-	@ docker run -it --rm -v $(PWD)/src:/src:ro $(PYLINT_IMAGE) dmba
+isort:
+	docker run -it --rm -v $(PWD):/code $(DMBA_DEV) isort src
 
-freeze:
-	docker run -it $(IMAGE) pip list --format=freeze | grep -v "^conda" > requirements.txt
+ruff:
+	docker run -it --rm -v $(PWD):/code $(DMBA_DEV) ruff --fix .
+
+mypy:
+	docker run -it --rm -v $(PWD):/code $(DMBA_DEV) mypy src
 
 
 # Docker container
-images: touch-docker docker/image.dmba
+images:
+	docker build -t $(DMBA_BASE) -f docker/Dockerfile.base .
+	docker build -t $(DMBA_DEV) -f docker/Dockerfile.devtools .
 
-touch-docker:
-	touch docker/Dockerfile.dmba
-
-docker/image.dmba: docker/Dockerfile.dmba
-	docker build -t $(IMAGE) -f docker/Dockerfile.dmba .
-	@ touch $@
-
+# Virtualenv
+venv:
+	python3 -m venv .venv
+	.venv/bin/pip install -r requirements.txt

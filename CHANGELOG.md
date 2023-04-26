@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### 0.2 (2023-04-20)
+- Move from using pydotplus to graphviz
+- Add type hints
+- switch to using ruff
+
 ### 0.0.19 (2021-12-05)
 - Update code to latest version of packages addressing depracation warnings
 

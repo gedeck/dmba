@@ -5,12 +5,15 @@ Applications in Python"
 (c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck
 '''
 import math
+from typing import Any, List, Optional
+
 import numpy as np
-from sklearn.metrics import r2_score, mean_squared_error
-from sklearn.metrics import confusion_matrix, accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix, mean_squared_error, r2_score
+
+Vector = Any
 
 
-def adjusted_r2_score(y_true, y_pred, model):
+def adjusted_r2_score(y_true: Vector, y_pred: Vector, model: Any) -> float:
     """ calculate adjusted R2
     Input:
         y_true: actual values
@@ -25,7 +28,7 @@ def adjusted_r2_score(y_true, y_pred, model):
     return 1 - (1 - r2) * (n - 1) / (n - p - 1)
 
 
-def AIC_score(y_true, y_pred, model=None, df=None):
+def AIC_score(y_true: Vector, y_pred: Vector, model: Optional[Any] = None, df: Optional[int] = None) -> float:
     """ calculate Akaike Information Criterion (AIC)
     Input:
         y_true: actual values
@@ -35,17 +38,25 @@ def AIC_score(y_true, y_pred, model=None, df=None):
 
     One of model or df is requried
     """
-    if df is None and model is None:
-        raise ValueError('You need to provide either model or df')
+    p = getDegreesOfFreedom(model=model, df=df)
     n = len(y_pred)
-    p = len(model.coef_) + 1 if df is None else df
     resid = np.array(y_true) - np.array(y_pred)
     sse = np.sum(resid ** 2)
     constant = n + n * np.log(2 * np.pi)
     return n * math.log(sse / n) + constant + 2 * (p + 1)
 
 
-def BIC_score(y_true, y_pred, model=None, df=None):
+def getDegreesOfFreedom(model: Optional[Any] = None, df: Optional[int] = None) -> int:
+    if model is not None:
+        p = len(model.coef_) + 1
+    elif df is not None:
+        p = df
+    else:
+        raise ValueError('You need to provide either model or df')
+    return p
+
+
+def BIC_score(y_true: Vector, y_pred: Vector, model: Optional[Any] = None, df: Optional[int] = None) -> float:
     """ calculate Schwartz's Bayesian Information Criterion (AIC)
     Input:
         y_true: actual values
@@ -53,13 +64,13 @@ def BIC_score(y_true, y_pred, model=None, df=None):
         model: predictive model
         df (optional): degrees of freedom of model
     """
+    p = getDegreesOfFreedom(model=model, df=df)
     aic = AIC_score(y_true, y_pred, model=model, df=df)
-    p = len(model.coef_) + 1 if df is None else df
     n = len(y_pred)
     return aic - 2 * (p + 1) + math.log(n) * (p + 1)
 
 
-def regressionSummary(y_true, y_pred):
+def regressionSummary(y_true: Vector, y_pred: Vector) -> None:
     """ print regression performance metrics
 
     Input:
@@ -86,14 +97,14 @@ def regressionSummary(y_true, y_pred):
         print(fmt1.format(metric, value))
 
 
-def _toArray(y):
-    y = np.asarray(y)
-    if len(y.shape) == 2 and y.shape[1] == 1:
-        y = y.ravel()
-    return y
+def _toArray(y: Vector) -> np.ndarray:
+    ya = np.asarray(y)
+    if len(ya.shape) == 2 and ya.shape[1] == 1:
+        ya = ya.ravel()
+    return ya
 
 
-def classificationSummary(y_true, y_pred, class_names=None):
+def classificationSummary(y_true: Vector, y_pred: Vector, class_names: Optional[List[str]] = None) -> None:
     """ Print a summary of classification performance
 
     Input:

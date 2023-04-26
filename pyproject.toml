@@ -1,0 +1,56 @@
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = false
+warn_unused_configs = true
+cache_dir = "/tmp"
+ignore_missing_imports = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+
+[tool.isort]
+line_length = 120
+multi_line_output = 0
+
+[tool.ruff]
+ignore = ["ISC003", "PT011", "A003", "B010", "EM101", "EM102", "Q000", "SLF001", "PGH003", "PD901", "TRY002", "TRY003",
+          "PLR2004", "UP007", "B905", "PLR0913", "PLR0912"]
+extend-select = [
+    "A", "ARG",
+    "B",
+    "C4", "COM",
+    "DJ", "DTZ",
+    "EM", "EXE",
+    "FBT",
+    "G",
+    "ICN", "INP", "ISC",
+    "NPY",
+    "PD", "PGH", "PIE", "PLC", "PLE", "PLR", "PLW", "PT", "PTH", "PYI",
+    "Q",
+    "RUF", "RSE",
+    "S", "SIM", "SLF",
+    "TCH", "TID", "TRY",
+    "UP",
+    "W",
+    # "ERA",
+  ]
+line-length = 120
+cache-dir = "/tmp"
+exclude = [
+    "migrations",
+    "D_*.py",
+    "__init__.py",
+  ]
+target-version = "py38"
+
+[tool.ruff.per-file-ignores]
+"*/collaborative_model/**/*.py" = ["PLR0912", "PLR0915", "PLW2901"]
+"*/tests/*.py" = ["S1", "FBT", "PLR"]
+
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-rP"
+testpaths = [
+    "src"
+  ]
+

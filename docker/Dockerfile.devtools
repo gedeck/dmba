@@ -1,0 +1,12 @@
+FROM dmba-base
+
+RUN pip3 install -U \
+    # isort:
+    isort \
+    # mypy:
+    mypy pandas-stubs types-setuptools \
+    types-Pygments types-colorama types-openpyxl \
+    # ruff:
+    ruff \
+    # pytest:
+    pytest pytest-watch pytest-testmon

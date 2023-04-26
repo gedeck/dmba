@@ -1,8 +1,8 @@
 '''
-Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and 
+Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
-(c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck 
+(c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck
 '''
 from pathlib import Path
 
@@ -17,15 +17,15 @@ def getVersion():
     return version
 
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+long_description = Path("README.md").read_text()
 
 setuptools.setup(
     name="dmba",
     version=getVersion(),
     author="Peter Gedeck",
     author_email="mail@petergedeck.com",
-    description="Utility functions for 'Data Mining for Business Analytics: Concepts, Techniques, and Applications in Python'",
+    description=("Utility functions for 'Data Mining for Business Analytics: "
+                 "Concepts, Techniques, and Applications in Python'"),
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/gedeck/dmba",
@@ -36,7 +36,6 @@ setuptools.setup(
     },
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",

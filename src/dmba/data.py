@@ -1,17 +1,17 @@
-'''
+"""
 Created on Jun 12, 2020
 
 @author: gedeck
-'''
+"""
 from pathlib import Path
+from typing import Any, Union
 
 import pandas as pd
-
 
 DATA_DIR = Path(__file__).parent / 'csvFiles'
 
 
-def load_data(name, **kwargs):
+def load_data(name: str, **kwargs: Any) -> Union[pd.DataFrame, pd.Series]:
     """ Returns the data either as a Pandas data frame or series """
     data_file = get_data_file(name)
     if not data_file.exists():
@@ -22,7 +22,7 @@ def load_data(name, **kwargs):
     return data
 
 
-def get_data_file(name):
+def get_data_file(name: str) -> Path:
     if name.endswith('.zip'):
         return DATA_DIR / name
     if name.endswith('.gz'):
