@@ -24,7 +24,7 @@ try:
     from IPython.display import Image
     hasImage = True
 except ImportError:
-    pass
+    hasImage = False
 
 def liftChart(predicted: pd.Series, *, title: str = 'Decile Lift Chart', labelBars: bool = True,
               ax: Any = None, figsize: Any = None) -> Any:
