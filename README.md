@@ -20,6 +20,6 @@ pip install dmba
 ```
 Should this not work, for example when you are behind a firewall, download the package from pypi and install from file, e.g.
 ```
-pip install dmba-0.1.0.tar.gz 
+pip install dmba-0.2.3.tar.gz 
 ```
 Adjust the link as required.

@@ -18,7 +18,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: sudo apt install -y graphviz
       - run: python --version
-      - run: pip install --upgrade pip pytest matplotlib pandas scikit-learn graphviz
+      - run: pip install --upgrade pip 
+      - run: pip install pytest matplotlib pandas scikit-learn graphviz
+      - run: pytest -rP -p no:cacheprovider
+      - run: pip install ipython
       - run: pytest -rP -p no:cacheprovider
 
   ruff:
@@ -33,3 +36,21 @@ jobs:
         run: pip install ruff
       - name: Run ruff
         run: cd ./src && ruff .
+
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.8"
+          
+
+      - name: Install dependencies
+        run: pip3 install -U pip mypy 
+        # types-Deprecated types-PyYAML types-requests types-simplejson isort types-pytz types-python-dateutil types-orjson
+      
+      - name: Run mypy cdd
+        run: mypy ./src
+

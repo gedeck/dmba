@@ -1,8 +1,9 @@
-"""
-Created on Jun 12, 2020
+'''
+Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
+Applications in Python"
 
-@author: gedeck
-"""
+(c) 2019-2023 Galit Shmueli, Peter C. Bruce, Peter Gedeck
+'''
 from pathlib import Path
 from typing import Any, Union
 

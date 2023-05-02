@@ -2,12 +2,11 @@
 Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
-(c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck
+(c) 2019-2023 Galit Shmueli, Peter C. Bruce, Peter Gedeck
 '''
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
-import graphviz
 
 import pandas as pd
 from sklearn.datasets import load_iris
@@ -16,6 +15,13 @@ from sklearn.tree import DecisionTreeClassifier
 
 from dmba import gainsChart, liftChart, textDecisionTree
 from dmba.graphs import plotDecisionTree
+
+try:
+    from IPython.display import Image
+    hasImage = True
+except ImportError:
+    hasImage = False
+
 
 
 class TestGraphs(unittest.TestCase):
@@ -56,7 +62,10 @@ class TestGraphs(unittest.TestCase):
         estimator.fit(X_train, y_train)
 
         representation = plotDecisionTree(estimator)
-        assert type(representation) == graphviz.sources.Source
+        if hasImage:
+            assert type(representation) == Image
+        else:
+            assert 'You need to install Image and/or graphviz' in representation
 
         with TemporaryDirectory() as tempdir:
             pdfFile = Path(tempdir) / 'tree.pdf'

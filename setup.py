@@ -2,7 +2,7 @@
 Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
-(c) 2019 Galit Shmueli, Peter C. Bruce, Peter Gedeck
+(c) 2019-2023 Galit Shmueli, Peter C. Bruce, Peter Gedeck
 '''
 from pathlib import Path
 
@@ -33,6 +33,17 @@ setuptools.setup(
     package_dir={'': 'src'},
     package_data={
         "dmba": ["csvFiles/*.csv.gz", "csvFiles/*.zip"],
+    },
+    install_requires=[
+        'graphviz',
+        'matplotlib',
+        'numpy',
+        'pandas',
+        'scikit-learn',
+        'scipy',
+    ],
+    extras_require={
+        "ipython": ["ipython"],
     },
     classifiers=[
         "Programming Language :: Python :: 3",
