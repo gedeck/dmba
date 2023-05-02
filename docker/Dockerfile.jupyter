@@ -1,0 +1,7 @@
+FROM dmba-base
+
+RUN pip install jupyter jupyterlab
+ENV PYDEVD_DISABLE_FILE_VALIDATION=1
+ENV PYTHONPATH=/code/src
+
+EXPOSE 8931

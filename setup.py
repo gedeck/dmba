@@ -34,6 +34,17 @@ setuptools.setup(
     package_data={
         "dmba": ["csvFiles/*.csv.gz", "csvFiles/*.zip"],
     },
+    install_requires=[
+        'graphviz',
+        'matplotlib',
+        'numpy',
+        'pandas',
+        'scikit-learn',
+        'scipy',
+    ],
+    extras_require={
+        "ipython": ["ipython"],
+    },
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",

@@ -7,7 +7,7 @@ Applications in Python"
 import io
 import os
 from tempfile import TemporaryDirectory
-from typing import Any, List, Optional, Union
+from typing import Any, List, Optional
 
 import numpy as np
 import pandas as pd
@@ -20,6 +20,11 @@ try:
 except ImportError:
     pass
 
+try:
+    from IPython.display import Image
+    hasImage = True
+except ImportError:
+    pass
 
 def liftChart(predicted: pd.Series, *, title: str = 'Decile Lift Chart', labelBars: bool = True,
               ax: Any = None, figsize: Any = None) -> Any:
@@ -81,7 +86,7 @@ def gainsChart(gains: pd.Series, color: str = 'C0', label: Optional[str] = None,
 def plotDecisionTree(decisionTree: Any, *, feature_names: Optional[List[str]] = None,
                      class_names: Optional[List[str]] = None, impurity: bool = False,
                      label: str = 'root', max_depth: Optional[int] = None, rotate: bool = False,
-                     pdfFile: Optional[os.PathLike] = None) -> Union[graphviz.Source, str]:
+                     pdfFile: Optional[os.PathLike] = None) -> Any:
     """ Create a plot of the scikit-learn decision tree and show in the Jupyter notebook
 
     Input:
@@ -96,6 +101,8 @@ def plotDecisionTree(decisionTree: Any, *, feature_names: Optional[List[str]] = 
     """
     if not hasGraphviz:
         return 'You need to install graphviz to visualize decision trees'
+    if not hasImage and not pdfFile:
+        return 'You need to install Image and/or graphviz to visualize decision trees'
     if class_names is not None:
         class_names = [str(s) for s in class_names]  # convert to strings
     dot_data = io.StringIO()
@@ -103,10 +110,12 @@ def plotDecisionTree(decisionTree: Any, *, feature_names: Optional[List[str]] = 
                     label=label, out_file=dot_data, filled=True, rounded=True, special_characters=True,
                     max_depth=max_depth, rotate=rotate)
     graph = graphviz.Source(dot_data.getvalue())
-    if pdfFile is not None:
-        with TemporaryDirectory() as tempdir:
+    with TemporaryDirectory() as tempdir:
+        if pdfFile is not None:
             graph.render('dot', directory=tempdir, format='pdf', outfile=pdfFile)
-    return graph
+        if hasImage:
+            return Image(graph.render('dot', directory=tempdir, format='png'))
+        return None
 
 # Taken from scikit-learn documentation
 
