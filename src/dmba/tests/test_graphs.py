@@ -62,7 +62,6 @@ class TestGraphs(unittest.TestCase):
         estimator.fit(X_train, y_train)
 
         representation = plotDecisionTree(estimator)
-        print(representation)
         if hasImage:
             assert type(representation) == Image
         else:
