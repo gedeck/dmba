@@ -20,7 +20,7 @@ try:
     from IPython.display import Image
     hasImage = True
 except ImportError:
-    pass
+    hasImage = False
 
 
 
