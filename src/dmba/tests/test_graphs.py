@@ -9,13 +9,19 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 import pandas as pd
-from IPython.display import Image
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
 from dmba import gainsChart, liftChart, textDecisionTree
-from dmba.graphs import plotDecisionTree, hasImage
+from dmba.graphs import plotDecisionTree
+
+try:
+    from IPython.display import Image
+    hasImage = True
+except ImportError:
+    pass
+
 
 
 class TestGraphs(unittest.TestCase):
