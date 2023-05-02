@@ -66,7 +66,7 @@ class TestGraphs(unittest.TestCase):
         if hasImage:
             assert type(representation) == Image
         else:
-            assert representation is None
+            assert 'You need to install Image and/or graphviz' in representation
 
         with TemporaryDirectory() as tempdir:
             pdfFile = Path(tempdir) / 'tree.pdf'
