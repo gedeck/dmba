@@ -132,7 +132,7 @@ def classificationSummary(y_true: Vector, y_pred: Vector, class_names: Optional[
     prediction = 'Prediction'
     actual = 'Actual'
     labelWidth = max(len(s) for s in labels)
-    cmWidth = max(max(len(s) for row in cm for s in row), labelWidth) + 1
+    cmWidth = max(*(len(s) for row in cm for s in row), labelWidth) + 1
     labelWidth = max(labelWidth, len(actual))
 
     # Construct the format statements
