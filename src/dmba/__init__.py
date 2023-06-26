@@ -5,6 +5,7 @@ Applications in Python"
 (c) 2019-2023 Galit Shmueli, Peter C. Bruce, Peter Gedeck
 '''
 import os
+import sys
 
 import matplotlib as mpl
 
@@ -15,6 +16,9 @@ from .metric import AIC_score, BIC_score, adjusted_r2_score, classificationSumma
 from .textMining import printTermDocumentMatrix
 from .version import __version__
 
-if os.environ.get('DISPLAY', '') == '' and os.name != 'nt':
-    print('no display found. Using non-interactive Agg backend')
-    mpl.use('Agg')
+if 'google.colab' in sys.modules:
+    print('Colab environment detected.')
+else:
+    if os.environ.get('DISPLAY', '') == '' and os.name != 'nt':
+        print('no display found. Using non-interactive Agg backend')
+        mpl.use('Agg')
