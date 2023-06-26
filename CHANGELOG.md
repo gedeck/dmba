@@ -2,6 +2,12 @@
 
 ## Changelog
 
+### 0.2.4 (2023-06-26)
+- Avoid setting display in collab notebooks
+
+### 0.2.3 (2023-05-01)
+- Control size of decisiontree plots in jupyter notebooks
+
 ### 0.2 (2023-04-20)
 - Move from using pydotplus to graphviz
 - Add type hints
