@@ -81,12 +81,12 @@ def backward_elimination(
 
     while len(best_variables) > 1:
         step = [Step(best_score, None, best_model)]
-        for removeVar in best_variables:
+        for remove_var in best_variables:
             step_var = list(best_variables)
-            step_var.remove(removeVar)
+            step_var.remove(remove_var)
             step_model = train_model(step_var)
             step_score = score_model(step_model, step_var)
-            step.append(Step(step_score, removeVar, step_model))
+            step.append(Step(step_score, remove_var, step_model))
 
         # sort by ascending score
         step.sort(key=lambda x: x[0])
@@ -102,7 +102,8 @@ def backward_elimination(
     return best_model, best_variables
 
 
-def forward_selection(variables: Iterable[str], train_model: TrainModel, score_model: ScoreModel, *,
+def forward_selection(variables: Iterable[str], train_model: TrainModel,
+                      score_model: ScoreModel, *,
                       verbose: bool = False) -> tuple[Model, list[str]]:
     """ Variable selection using forward selection
 
@@ -149,8 +150,9 @@ def forward_selection(variables: Iterable[str], train_model: TrainModel, score_m
     return best_model, best_variables
 
 
-def stepwise_selection(variables: list[str], train_model: TrainModel, score_model: ScoreModel, *,
-                       direction: str = 'both', verbose: bool = True) -> tuple[Model, list[str]]:
+def stepwise_selection(
+    variables: list[str], train_model: TrainModel, score_model: ScoreModel, *,
+    direction: str = 'both', verbose: bool = True) -> tuple[Model, list[str]]:
     """ Variable selection using forward and/or backward selection
 
     Input:
