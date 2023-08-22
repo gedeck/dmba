@@ -26,21 +26,26 @@ def load_data(name: str, **kwargs: Any) -> Union[DataFrame, Series]:
 
 def get_bytes(name: str) -> bytes:
     """Returns the data as a byte string"""
-    data_file = get_data_file(name)
-    if not data_file.exists():
+    data_path = get_data_path(name)
+    if not data_path.exists():
         raise ValueError('Data file {name} not found')
-    if data_file.suffix == '.zip':
-        with ZipFile(data_file) as zip_file:
+    if data_path.suffix == '.zip':
+        with ZipFile(data_path) as zip_file:
             with zip_file.open(zip_file.namelist()[0]) as data_file:
                 return data_file.read()
-    elif data_file.suffixes == ['.csv', '.gz']:
-        with gzip.open(data_file) as data_file:
+    elif data_path.suffixes == ['.csv', '.gz']:
+        with gzip.open(data_path) as data_file:
+            return data_file.read()
+    else:
+        with open(data_path, 'r') as data_file:
             return data_file.read()
 
-def get_data_file(name: str) -> Path:
+def get_data_path(name: str) -> Path:
     stem, *suffixes = name.split('.')
     match suffixes:
         case ['.zip']:
             return DATA_DIR / name
         case ['.gz'] | ['.csv']:
             return DATA_DIR / stem / '.csv.gz'
+        case _:
+            return DATA_DIR / name
