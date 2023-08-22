@@ -30,14 +30,16 @@ def get_bytes(name: str) -> bytes | str:
     if not data_path.exists():
         raise ValueError('Data file {name} not found')
     if data_path.suffix == '.zip':
-        with ZipFile(data_path) as zip_file:
-            with zip_file.open(zip_file.namelist()[0]) as data_file:
-                return data_file.read()
+        with (
+            ZipFile(data_path) as zip_file,
+            zip_file.open(zip_file.namelist()[0]) as data_file,
+        ):
+            return data_file.read()
     elif data_path.suffixes == ['.csv', '.gz']:
         with gzip.open(data_path) as data_file:
             return data_file.read()
     else:
-        with open(data_path, 'r') as data_file:
+        with data_path.open() as data_file:
             return data_file.read()
 
 def get_data_path(name: str) -> Path:
