@@ -1,13 +1,14 @@
-'''
+"""
 Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
 (c) 2019-2023 Galit Shmueli, Peter C. Bruce, Peter Gedeck
-'''
-import unittest
+"""
+
 from collections import namedtuple
 from contextlib import redirect_stdout
 from io import StringIO
+from typing import NamedTuple
 
 import pytest
 from sklearn.metrics import r2_score
@@ -17,8 +18,8 @@ from dmba import AIC_score, BIC_score, adjusted_r2_score, classificationSummary,
 MockModel = namedtuple('MockModel', 'coef_')
 
 
-class TestMetric(unittest.TestCase):
-    def test_adjusted_r2_score(self) -> None:
+class TestMetric:
+    def test_adjusted_r2_score(self):
         y_true = [1, 2, 3, 4, 5]
         y_pred = [1, 3, 2, 5, 4]
 
@@ -41,7 +42,7 @@ class TestMetric(unittest.TestCase):
         assert (adjusted_r2_score(y_true, y_pred, MockModel(coef_=coef)) ==
                 pytest.approx(0)), 'failed for too many degree of freedom'
 
-    def test_AIC_score(self) -> None:
+    def test_AIC_score(self):
         y_true = [1, 2, 3, 4, 5]
         y_pred = [1, 3, 2, 5, 4]
 
@@ -52,7 +53,7 @@ class TestMetric(unittest.TestCase):
 
         assert AIC_score(y_true, y_pred, df=3) > AIC_score(y_true, y_pred, df=2)
 
-    def test_BIC_score(self) -> None:
+    def test_BIC_score(self):
         y_true = [1, 2, 3, 4, 5]
         y_pred = [1, 3, 2, 5, 4]
 
@@ -63,13 +64,13 @@ class TestMetric(unittest.TestCase):
 
         assert BIC_score(y_true, y_pred, df=3) > BIC_score(y_true, y_pred, df=2)
 
-    def test_regressionSummary(self) -> None:
+    def test_regression_summary(self):
         y_true = [1, 2, 3, 4, 5]
         y_pred = [1, 3, 2, 5, 4]
 
         out = StringIO()
         with redirect_stdout(out):
-            regressionSummary(y_true, y_pred)
+            regression_summary(y_true, y_pred)
         s = out.getvalue()
         assert 'Regression statistics' in s
         assert '(ME) : 0.0000' in s
@@ -83,7 +84,7 @@ class TestMetric(unittest.TestCase):
 
         out = StringIO()
         with redirect_stdout(out):
-            regressionSummary(y_true, y_pred)
+            regression_summary(y_true, y_pred)
         s = out.getvalue()
         assert 'Regression statistics' in s
         assert '(ME) : 0.0000' in s
@@ -92,13 +93,13 @@ class TestMetric(unittest.TestCase):
         assert '(MPE)' not in s
         assert '(MAPE)' not in s
 
-    def test_regressionSummary2(self) -> None:
+    def test_regression_summary2(self):
         y_true = [[1], [2], [3], [4], [5]]
         y_pred = [[1], [3], [2], [5], [4]]
 
         out = StringIO()
         with redirect_stdout(out):
-            regressionSummary(y_true, y_pred)
+            regression_summary(y_true, y_pred)
         s = out.getvalue()
         assert 'Regression statistics' in s
         assert '(ME) : 0.0000' in s
@@ -107,13 +108,13 @@ class TestMetric(unittest.TestCase):
         assert '(MPE) : -4.3333' in s
         assert '(MAPE) : 25.6667' in s
 
-    def test_classificationSummary(self) -> None:
+    def test_classification_summary(self):
         y_true = [1, 0, 0, 1, 1, 1]
         y_pred = [1, 0, 1, 1, 0, 0]
 
         out = StringIO()
         with redirect_stdout(out):
-            classificationSummary(y_true, y_pred, class_names=['a', 'b'])
+            classification_summary(y_true, y_pred, class_names=['a', 'b'])
         s = out.getvalue()
 
         assert 'Confusion Matrix' in s
