@@ -1,0 +1,160 @@
+serial,code,nation,score,#_surveys
+1,AF,Afghanistan,4.1,1
+2,AL,Albania,4.6,1
+3,DZ,Algeria,5.7,2
+4,AD,Andorra,6.8,2
+5,AO,Angola,4.3,1
+6,AR,Argentina,7.1,4
+7,AM,Armenia,4.9,2
+8,AU,Australia,7.6,9
+9,AT,Austria,7.2,2
+10,AZ,Azerbaijan,5.8,2
+11,BD,Bangladesh,5.3,1
+12,BY,Belarus,5.5,3
+13,BE,Belgium,7.2,9
+14,BZ,Belize,6.6,1
+15,BJ,Benin,3,1
+16,BT,Bhutan,5.6,2
+17,BO,Bolivia,6.3,1
+18,BA,Bosnia Herzegovina,5.8,1
+19,BW,Botswana,4.7,1
+20,BR,Brazil,6.9,3
+21,BG,Bulgaria,4.6,7
+22,BF,Burkina Faso,4.4,2
+23,BI,Burundi,2.9,1
+24,KH,Cambodia,4.9,1
+25,CM,Cameroon,3.9,1
+26,CA,Canada,8,1
+27,CF,Central African Rep,4.6,1
+28,TD,Chad,5.4,1
+29,CL,Chile,6.8,3
+30,CN,China,6.2,4
+31,CO,Colombia,7.9,3
+32,KM,Comoros,3.9,4
+33,CG,Congo (Brazzaville),3.7,1
+34,CD,"Congo (Kinshasa),",4.4,1
+35,CR,Costa Rica,8.5,1
+36,CI,Cote dIvoire,4.4,1
+37,HR,Croatia,6,2
+38,CY,Cyprus,7.1,8
+39,CZ,Czech Republic,6.6,5
+40,DK,Denmark,8.4,7
+41,DJ,Djibouti,5.7,1
+42,DO,Dominican Republic,7.5,2
+43,EC,Ecuador,6.8,3
+44,EG,Egypt,5.5,4
+45,SV,El Salvador,6.7,1
+46,EE,Estonia,6.2,7
+47,ET,Ethiopia,4.2,2
+48,FI,Finland,7.9,7
+49,FR,France,6.4,7
+50,GA,Gabon,4.2,5
+51,GE,Georgia,4.3,1
+52,DE,Germany,7.2,13
+53,GH,Ghana,5.4,3
+54,GR,Greece,6.5,2
+55,GT,Guatemala,7.2,1
+56,GN,Guinea,4.5,1
+57,GY,Guyana,6.5,1
+58,HT,Haiti,3.9,1
+59,HN,Honduras,7,1
+60,HK,Hong Kong,6.7,6
+61,HU,Hungary,5.5,5
+62,IS,Iceland,8.1,3
+63,IN,India,5.5,1
+64,ID,Indonesia,6.1,2
+65,IR,Iran,5.8,2
+66,IQ,Iraq,4.9,3
+67,IE,Ireland,7.5,4
+68,IL,Israel,7.4,4
+69,IT,Italy,6.6,6
+70,JM,Jamaica,6.7,1
+71,JP,Japan,6.4,4
+72,JO,Jordan,6.2,4
+73,KZ,Kazakhstan,6.5,2
+74,KE,Kenya,3.7,1
+75,KR,Korea (South),6.1,3
+76,KO,Kosovo,5.7,6
+77,KW,Kuwait,6.8,2
+78,KG,Kyrgyzstan,5.8,2
+79,LA,Laos,6.2,1
+80,LV,Latvia,5.5,2
+81,LB,Lebanon,5.4,2
+82,LS,Lesotho,5.2,1
+83,LR,Liberia,4.4,5
+84,LY,Libya,5.8,3
+85,LT,Lithuania,5.8,2
+86,LU,Luxembourg,7.7,2
+87,MK,Macedonia,4.7,2
+88,MG,Madagascar,3.7,1
+89,MW,Malawi,6.2,1
+90,MY,Malaysia,6.6,3
+91,ML,Mali,4.7,2
+92,MT,Malta,7.2,2
+93,MR,Mauritania,4.9,1
+94,MU,Mauritius,5.9,1
+95,MX,Mexico,8.3,4
+96,MD,Moldova,5.3,2
+97,MN,Mongolia,5.7,1
+98,ME,Montenegro,5.2,1
+99,MA,Morocco,5.3,3
+100,MZ,Mozambique,3.8,1
+101,MM,Myanmar,4.9,3
+102,NA,Namibia,5.2,1
+103,NP,Nepal,5.3,1
+104,NL,Netherlands,7.6,12
+105,NZ,New Zealand,7.4,3
+106,NI,Nicaragua,7.1,1
+107,NE,Niger,3.8,1
+108,NG,Nigeria,5.3,2
+109,CYN,North Cyprus,5.9,1
+110,NO,Norway,8,6
+111,OM,Oman,7.5,1
+112,PK,Pakistan,6,3
+113,PS,Palestina,5,2
+114,PA,Panama,7.8,1
+115,PY,Paraguay,6.8,1
+116,PE,Peru,6.5,3
+117,PH,Philippines,7,3
+118,PL,Poland,6.8,8
+119,PT,Portugal,5.8,6
+120,QA,Qatar,7.3,2
+121,RO,Romania,6,7
+122,RU,Russia,5.6,8
+123,RW,Rwanda,4.9,3
+124,SA,Saudi Arabia,6.3,2
+125,SN,Senegal,4.5,1
+126,RS,Serbia,5.6,2
+127,SL,Sierra Leone,3.5,1
+128,SG,Singapore,6.8,3
+129,SK,Slovakia,6.3,5
+130,SI,Slovenia,7,7
+131,ZA,South Africa,6.3,5
+132,ES,Spain,7,10
+133,LK,Sri Lanka,5.1,2
+134,SD,Sudan,5,1
+135,SR,Surinam,6.7,2
+136,SE,Sweden,7.8,9
+137,CH,Switzerland,8,8
+138,SY,Syria,5.9,1
+139,TW,Taiwan,6.4,2
+140,TJ,Tajikistan,5.1,1
+141,TZ,Tanzania,2.5,1
+142,TH,Thailand,6.8,3
+143,TG,Togo,2.6,1
+144,TT,Trinidad and Tobago,7.1,3
+145,TN,Tunisia,5.5,2
+146,TR,Turkey,6,6
+147,TM,Turkmenistan,7.2,1
+148,UG,Uganda,4.5,1
+149,UA,Ukraine,5.1,4
+150,AE,United Arab Emirate,7.3,1
+151,GB,United Kingdom,7.1,9
+152,US,United States,7.3,4
+153,UY,Uruguay,7,2
+154,UZ,Uzbekistan,6.8,2
+155,VE,Venezuela,7.8,1
+156,VN,Viet Nam,6.1,2
+157,YE,Yemen,5.1,2
+158,ZM,Zambia,5,2
+159,ZW,Zimbabwe,4.1,2
