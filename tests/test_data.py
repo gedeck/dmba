@@ -7,7 +7,7 @@ Applications in Python"
 
 from pathlib import Path
 
-import pandas as pd
+from polars import DataFrame, Series
 import pytest
 
 import dmba
@@ -21,18 +21,18 @@ class TestData:
 
         for name in ('Amtrak.csv', ):
             data = dmba.load_data(name)
-            assert isinstance(data, pd.DataFrame)
+            assert isinstance(data, DataFrame)
 
     def test_load_data_all(self) -> None:
         for name in Path(DATA_DIR).glob('*.csv.gz'):
             data = dmba.load_data(name.name)
-            assert isinstance(data, (pd.Series, pd.DataFrame))
+            assert isinstance(data, (Series, DataFrame))
             assert len(data.shape) <= 2
             if len(data.shape) == 1:
-                assert isinstance(data, pd.Series)
+                assert isinstance(data, Series)
                 print(name)
             else:
-                assert isinstance(data, pd.DataFrame)
+                assert isinstance(data, DataFrame)
                 assert data.shape[1] > 1
 
     def test_kwargs_load_data(self) -> None:
