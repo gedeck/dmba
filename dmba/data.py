@@ -27,7 +27,7 @@ def load_data(name: str, **kwargs: Any) -> Union[DataFrame, Series]:
     return data
 
 
-def get_data_file(name: str) -> Path:
+def get_data_file(name: str) -> bytes | Path:
     if name.endswith('.zip'):
         return ZipFile(DATA_DIR / name).read(name.replace('.zip', '.csv'))
     if name.endswith('.gz'):
