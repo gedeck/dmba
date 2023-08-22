@@ -32,11 +32,8 @@ Repository = "https://github.com/polars-stats/dmba"
 [tool.setuptools.dynamic]
 version = { attr = "src.dmba.version.__version__" }
 
-[tool.setuptools.packages.find]
-# TODO
-package_data = {
-    "dmba": ["csvFiles/*.csv.gz", "csvFiles/*.zip"],
-}
+[tool.setuptools.package-data]
+dmba = ["csv/*.csv.gz", "csv/*.zip"]
 
 [tool.mypy]
 warn_return_any = false
