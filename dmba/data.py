@@ -7,6 +7,7 @@ Applications in Python"
 
 from pathlib import Path
 from typing import Any, Union
+from zipfile import ZipFile
 
 import polars as pl
 from polars import DataFrame, Series
@@ -28,7 +29,7 @@ def load_data(name: str, **kwargs: Any) -> Union[DataFrame, Series]:
 
 def get_data_file(name: str) -> Path:
     if name.endswith('.zip'):
-        return DATA_DIR / name
+        return ZipFile(DATA_DIR / name).read(name.replace('.zip', '.csv'))
     if name.endswith('.gz'):
         name = name[:-3]
     if name.endswith('.csv'):
