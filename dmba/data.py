@@ -19,12 +19,12 @@ DATA_DIR = Path(__file__).parent.parent / 'data'
 
 def load_data(name: str, **kwargs: Any) -> Union[DataFrame, Series]:
     """ Returns the data either as a Pandas data frame or series """
-    data = pl.read_csv(get_bytes(name), **kwargs)
+    data = pl.read_csv(get_data(name), **kwargs)
     if data.shape[1] == 1:
         return data[data.columns[0]]  # pylint: disable=E1136
     return data
 
-def get_bytes(name: str) -> bytes | str:
+def get_data(name: str) -> bytes | str:
     """Returns the data as a byte string"""
     data_path = get_data_path(name)
     if not data_path.exists():
@@ -45,9 +45,9 @@ def get_bytes(name: str) -> bytes | str:
 def get_data_path(name: str) -> Path:
     stem, *suffixes = name.split('.')
     match suffixes:
-        case ['.zip']:
+        case ['zip']:
             return DATA_DIR / name
-        case ['.gz'] | ['.csv']:
+        case ['gz'] | ['csv']:
             return DATA_DIR / stem / '.csv.gz'
         case _:
             return DATA_DIR / name
