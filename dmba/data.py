@@ -24,7 +24,7 @@ def load_data(name: str, **kwargs: Any) -> Union[DataFrame, Series]:
         return data[data.columns[0]]  # pylint: disable=E1136
     return data
 
-def get_bytes(name: str) -> bytes:
+def get_bytes(name: str) -> bytes | str:
     """Returns the data as a byte string"""
     data_path = get_data_path(name)
     if not data_path.exists():

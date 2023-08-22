@@ -10,7 +10,7 @@ import sys
 
 import matplotlib as mpl
 
-from .data import get_data_file, load_data
+from .data import get_data_path, load_data
 from .feature_selection import backward_elimination, exhaustive_search, forward_selection, stepwise_selection
 from .graphs import gains_chart, lift_chart, plot_decision_tree, text_decision_tree
 from .metric import AIC_score, BIC_score, adjusted_r2_score, classification_summary, regression_summary
