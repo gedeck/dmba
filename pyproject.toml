@@ -32,7 +32,7 @@ Repository = "https://github.com/polars-stats/dmba"
 # TODO
 package_data = {
     "dmba": ["csvFiles/*.csv.gz", "csvFiles/*.zip"],
-},
+}
 
 [tool.mypy]
 python_version = "3.8"
