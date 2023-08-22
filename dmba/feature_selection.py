@@ -1,26 +1,28 @@
-'''
+"""
 Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
 (c) 2019-2023 Galit Shmueli, Peter C. Bruce, Peter Gedeck
-'''
+"""
+
+from collections.abc import Callable, Iterable
 import itertools
-from typing import Any, Callable, Iterable, List, NamedTuple, Optional, Tuple, TypedDict, TypeVar
+from typing import Any, NamedTuple, Optional, TypedDict, TypeVar
 
 Model = TypeVar('Model')
-TrainModel = Callable[[List[str]], Model]
-ScoreModel = Callable[[Model, List[str]], float]
+TrainModel = Callable[[list[str]], Model]
+ScoreModel = Callable[[Model, list[str]], float]
 
 
 class ExhaustivSearchResult(TypedDict):
     n: int
-    variables: List[str]
+    variables: list[str]
     score: float
     model: Any  # should be Model
 
 
-def exhaustive_search(variables: List[str], train_model: TrainModel,
-                      score_model: ScoreModel) -> List[ExhaustivSearchResult]:
+def exhaustive_search(variables: list[str], train_model: TrainModel,
+                      score_model: ScoreModel) -> list[ExhaustivSearchResult]:
     """ Variable selection using backward elimination
 
     Input:
@@ -46,13 +48,14 @@ def exhaustive_search(variables: List[str], train_model: TrainModel,
                     score=subset_score,
                     model=subset_model,
                 )
-        assert best is not None  # noqa: ignore=S101
+        assert best is not None  # noqa: S101
         result.append(best)
     return result
 
 
-def backward_elimination(variables: Iterable[str], train_model: TrainModel, score_model: ScoreModel, *,
-                         verbose: bool = False) -> Tuple[Model, List[str]]:
+def backward_elimination(
+    variables: Iterable[str], train_model: TrainModel, score_model: ScoreModel,
+    *, verbose: bool = False) -> tuple[Model, list[str]]:
     """ Variable selection using backward elimination
 
     Input:
@@ -100,7 +103,7 @@ def backward_elimination(variables: Iterable[str], train_model: TrainModel, scor
 
 
 def forward_selection(variables: Iterable[str], train_model: TrainModel, score_model: ScoreModel, *,
-                      verbose: bool = False) -> Tuple[Model, List[str]]:
+                      verbose: bool = False) -> tuple[Model, list[str]]:
     """ Variable selection using forward selection
 
     Input:
@@ -117,7 +120,7 @@ def forward_selection(variables: Iterable[str], train_model: TrainModel, score_m
         model: Any
 
     # we start with a model that contains no variables
-    best_variables: List[str] = []
+    best_variables: list[str] = []
     best_model = train_model(best_variables)
     best_score = score_model(best_model, best_variables)
     if verbose:
@@ -146,8 +149,8 @@ def forward_selection(variables: Iterable[str], train_model: TrainModel, score_m
     return best_model, best_variables
 
 
-def stepwise_selection(variables: List[str], train_model: TrainModel, score_model: ScoreModel, *,
-                       direction: str = 'both', verbose: bool = True) -> Tuple[Model, List[str]]:
+def stepwise_selection(variables: list[str], train_model: TrainModel, score_model: ScoreModel, *,
+                       direction: str = 'both', verbose: bool = True) -> tuple[Model, list[str]]:
     """ Variable selection using forward and/or backward selection
 
     Input:
@@ -174,7 +177,7 @@ def stepwise_selection(variables: List[str], train_model: TrainModel, score_mode
         directions = [BACKWARD]
 
     # we start with a model that contains no variables
-    best_variables: List[str] = [] if 'forward' in directions else list(variables)
+    best_variables: list[str] = [] if 'forward' in directions else list(variables)
     best_model = train_model(best_variables)
     best_score = score_model(best_model, best_variables)
     if verbose:

@@ -13,7 +13,7 @@ from typing import NamedTuple
 import pytest
 from sklearn.metrics import r2_score
 
-from dmba import AIC_score, BIC_score, adjusted_r2_score, classificationSummary, regressionSummary
+from dmba import AIC_score, BIC_score, adjusted_r2_score, classification_summary, regression_summary
 
 MockModel = namedtuple('MockModel', 'coef_')
 

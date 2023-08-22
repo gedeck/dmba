@@ -1,21 +1,21 @@
-'''
+"""
 Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
 (c) 2019-2023 Galit Shmueli, Peter C. Bruce, Peter Gedeck
-'''
-import unittest
+"""
+
 from contextlib import redirect_stdout
 from io import StringIO
 
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 
-from dmba import printTermDocumentMatrix
+from dmba import print_term_document_matrix
 
 
-class TestTextMining(unittest.TestCase):
-    def test_printTermDocumentMatrix(self) -> None:
+class TestTextMining:
+    def test_print_term_document_matrix(self) -> None:
         text = ['this is the first sentence.',
                 'this is a second sentence.',
                 'the third sentence is here.']
@@ -27,7 +27,7 @@ class TestTextMining(unittest.TestCase):
 
         out = StringIO()
         with redirect_stdout(out):
-            printTermDocumentMatrix(count_vect, counts)
+            print_term_document_matrix(count_vect, counts)
         s = out.getvalue()
         assert 'S1  S2  S3' in s
         assert 'first      1   0   0' in s

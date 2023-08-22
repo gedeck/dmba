@@ -1,32 +1,33 @@
-'''
+"""
 Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
 (c) 2019-2023 Galit Shmueli, Peter C. Bruce, Peter Gedeck
-'''
+"""
+
 import io
 import os
 from tempfile import TemporaryDirectory
-from typing import Any, List, Optional
+from typing import Any, Optional
 
 import numpy as np
 import pandas as pd
 from sklearn.tree import export_graphviz
 
-hasGraphviz = False
+
 try:
     import graphviz
-    hasGraphviz = True
+    HAS_GRAPHVIZ = True
 except ImportError:
-    pass
+    HAS_GRAPHVIZ = False
 
 try:
     from IPython.display import Image
-    hasImage = True
+    HAS_IMAGE = True
 except ImportError:
-    hasImage = False
+    HAS_IMAGE = False
 
-def liftChart(predicted: pd.Series, *, title: str = 'Decile Lift Chart', labelBars: bool = True,
+def lift_chart(predicted: pd.Series, *, title: str = 'Decile Lift Chart', labelBars: bool = True,
               ax: Any = None, figsize: Any = None) -> Any:
     """ Create a lift chart using predicted values
 
@@ -56,7 +57,7 @@ def liftChart(predicted: pd.Series, *, title: str = 'Decile Lift Chart', labelBa
     return ax
 
 
-def gainsChart(gains: pd.Series, color: str = 'C0', label: Optional[str] = None,
+def gains_chart(gains: pd.Series, color: str = 'C0', label: Optional[str] = None,
                ax: Any = None, figsize: Any = None) -> Any:
     """ Create a gains chart using predicted values
 
@@ -83,57 +84,58 @@ def gainsChart(gains: pd.Series, color: str = 'C0', label: Optional[str] = None,
     return ax
 
 
-def plotDecisionTree(decisionTree: Any, *, feature_names: Optional[List[str]] = None,
-                     class_names: Optional[List[str]] = None, impurity: bool = False,
-                     label: str = 'root', max_depth: Optional[int] = None, rotate: bool = False,
-                     pdfFile: Optional[os.PathLike] = None) -> Any:
+def plot_decision_tree(
+    decision_tree: Any, *, feature_names: Optional[list[str]] = None,
+    class_names: Optional[list[str]] = None, impurity: bool = False,
+    label: str = 'root', max_depth: Optional[int] = None, rotate: bool = False,
+    pdf_file: Optional[os.PathLike] = None) -> Any:
     """ Create a plot of the scikit-learn decision tree and show in the Jupyter notebook
 
     Input:
-        decisionTree: scikit-learn decision tree
+        decision_tree: scikit-learn decision tree
         feature_names (optional): variable names
         class_names (optional): class names, only relevant for classification trees
         impurity (optional): show node impurity
         label (optional): only show labels at the root
         max_depth (optional): limit
         rotate (optional): rotate the layout of the graph
-        pdfFile (optional): provide pathname to create a PDF file of the graph
+        pdf_file (optional): provide pathname to create a PDF file of the graph
     """
-    if not hasGraphviz:
+    if not HAS_GRAPHVIZ:
         return 'You need to install graphviz to visualize decision trees'
-    if not hasImage and not pdfFile:
+    if not HAS_IMAGE and not pdf_file:
         return 'You need to install Image and/or graphviz to visualize decision trees'
     if class_names is not None:
         class_names = [str(s) for s in class_names]  # convert to strings
     dot_data = io.StringIO()
-    export_graphviz(decisionTree, feature_names=feature_names, class_names=class_names, impurity=impurity,
+    export_graphviz(decision_tree, feature_names=feature_names, class_names=class_names, impurity=impurity,
                     label=label, out_file=dot_data, filled=True, rounded=True, special_characters=True,
                     max_depth=max_depth, rotate=rotate)
     graph = graphviz.Source(dot_data.getvalue())
     with TemporaryDirectory() as tempdir:
-        if pdfFile is not None:
-            graph.render('dot', directory=tempdir, format='pdf', outfile=pdfFile)
-        if hasImage:
+        if pdf_file is not None:
+            graph.render('dot', directory=tempdir, format='pdf', outfile=pdf_file)
+        if HAS_IMAGE:
             return Image(graph.render('dot', directory=tempdir, format='png'))
         return None
 
 # Taken from scikit-learn documentation
 
 
-def textDecisionTree(decisionTree: Any, indent: str = '  ', as_ratio: bool = True) -> str:  # noqa: FBT
+def text_decision_tree(decision_tree: Any, indent: str = '  ', *, as_ratio: bool = True) -> str:  # noqa: FBT
     """ Create a text representation of the scikit-learn decision tree
 
     Input:
-        decisionTree: scikit-learn decision tree
+        decision_tree: scikit-learn decision tree
         as_ratio: show the composition of the leaf nodes as ratio (default) instead of counts
         indent: indentation (default two spaces)
     """
-    n_nodes = decisionTree.tree_.node_count
-    children_left = decisionTree.tree_.children_left
-    children_right = decisionTree.tree_.children_right
-    feature = decisionTree.tree_.feature
-    threshold = decisionTree.tree_.threshold
-    node_value = decisionTree.tree_.value
+    n_nodes = decision_tree.tree_.node_count
+    children_left = decision_tree.tree_.children_left
+    children_right = decision_tree.tree_.children_right
+    feature = decision_tree.tree_.feature
+    threshold = decision_tree.tree_.threshold
+    node_value = decision_tree.tree_.value
 
     node_depth = np.zeros(shape=n_nodes, dtype=np.int64)
     is_leaves = np.zeros(shape=n_nodes, dtype=bool)

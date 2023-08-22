@@ -17,12 +17,13 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: sudo apt install -y graphviz
-      - run: python --version
-      - run: pip install --upgrade pip 
-      - run: pip install pytest matplotlib polars scikit-learn graphviz
-      - run: pytest -rP -p no:cacheprovider
-      - run: pip install ipython
-      - run: pytest -rP -p no:cacheprovider
+      - run: python3 --version
+      - run: pip3 install --upgrade pip 
+      - run: pip3 install -e .
+      - run: pip3 install pytest
+      - run: python3 -m pytest -p no:cacheprovider
+      - run: pip3 install ipython
+      - run: python3 -m pytest -p no:cacheprovider
 
   ruff:
     runs-on: ubuntu-latest
@@ -33,9 +34,9 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install dependencies
-        run: pip install ruff
+        run: pip3 install ruff
       - name: Run ruff
-        run: cd ./src && ruff .
+        run: python3 -m ruff dmba
 
   mypy:
     runs-on: ubuntu-latest
@@ -45,12 +46,10 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-          
 
       - name: Install dependencies
         run: pip3 install -U pip mypy 
         # types-Deprecated types-PyYAML types-requests types-simplejson isort types-pytz types-python-dateutil types-orjson
       
       - name: Run mypy cdd
-        run: mypy ./src
-
+        run: python3 -m mypy dmba

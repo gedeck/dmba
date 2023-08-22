@@ -1,10 +1,10 @@
-'''
+"""
 Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
 (c) 2019-2023 Galit Shmueli, Peter C. Bruce, Peter Gedeck
-'''
-import unittest
+"""
+
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -13,29 +13,28 @@ from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
-from dmba import gainsChart, liftChart, textDecisionTree
-from dmba.graphs import plotDecisionTree
+from dmba import gains_chart, lift_chart, text_decision_tree
+from dmba.graphs import plot_decision_tree
 
 try:
     from IPython.display import Image
-    hasImage = True
+    HAS_IMAGE = True
 except ImportError:
-    hasImage = False
+    HAS_IMAGE = False
 
 
-
-class TestGraphs(unittest.TestCase):
-    def test_liftChart(self) -> None:
+class TestGraphs:
+    def test_lift_chart(self) -> None:
         data = pd.Series([7] * 10 + [2.5] * 10 + [0.5] * 10 + [0.25] * 20 + [0.1] * 50)
-        ax = liftChart(data)
+        ax = lift_chart(data)
         assert ax is not None
 
-    def test_gainsChart(self) -> None:
+    def test_gains_chart(self) -> None:
         data = pd.Series([7] * 10 + [2.5] * 10 + [0.5] * 10 + [0.25] * 20 + [0.1] * 50)
-        ax = gainsChart(data)
+        ax = gains_chart(data)
         assert ax is not None
 
-    def test_textDecisionTree(self) -> None:
+    def test_text_decision_tree(self) -> None:
         iris = load_iris()
         X = iris.data
         y = iris.target
@@ -44,7 +43,7 @@ class TestGraphs(unittest.TestCase):
         estimator = DecisionTreeClassifier(max_leaf_nodes=3, random_state=0)
         estimator.fit(X_train, y_train)
 
-        representation = textDecisionTree(estimator)
+        representation = text_decision_tree(estimator)
         # print(representation)
         assert 'node=0 test node' in representation
         assert 'node=1 leaf node' in representation
@@ -52,7 +51,7 @@ class TestGraphs(unittest.TestCase):
         assert 'node=3 leaf node' in representation
         assert 'node=4 leaf node' in representation
 
-    def test_plotDecisionTree(self) -> None:
+    def test_plot_decision_tree(self) -> None:
         iris = load_iris()
         X = iris.data
         y = iris.target
@@ -61,15 +60,15 @@ class TestGraphs(unittest.TestCase):
         estimator = DecisionTreeClassifier(max_leaf_nodes=3, random_state=0)
         estimator.fit(X_train, y_train)
 
-        representation = plotDecisionTree(estimator)
-        if hasImage:
+        representation = plot_decision_tree(estimator)
+        if HAS_IMAGE:
             assert type(representation) == Image
         else:
             assert 'You need to install Image and/or graphviz' in representation
 
         with TemporaryDirectory() as tempdir:
-            pdfFile = Path(tempdir) / 'tree.pdf'
-            assert not pdfFile.exists()
-            representation = plotDecisionTree(estimator, pdfFile=pdfFile)
-            assert pdfFile.exists()
-            assert b'PDF' in pdfFile.read_bytes()
+            pdf_file = Path(tempdir) / 'tree.pdf'
+            assert not pdf_file.exists()
+            representation = plot_decision_tree(estimator, pdf_file=pdf_file)
+            assert pdf_file.exists()
+            assert b'PDF' in pdf_file.read_bytes()

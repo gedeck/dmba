@@ -1,15 +1,17 @@
-'''
+"""
 Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
 (c) 2019-2023 Galit Shmueli, Peter C. Bruce, Peter Gedeck
-'''
+"""
+
 from pathlib import Path
 from typing import Any, Union
 
 import pandas as pd
 
-DATA_DIR = Path(__file__).parent / 'csvFiles'
+
+DATA_DIR = Path(__file__).parent.parent / 'data'
 
 
 def load_data(name: str, **kwargs: Any) -> Union[pd.DataFrame, pd.Series]:

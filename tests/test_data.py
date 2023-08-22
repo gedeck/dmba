@@ -1,10 +1,10 @@
-'''
+"""
 Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
 (c) 2019-2023 Galit Shmueli, Peter C. Bruce, Peter Gedeck
-'''
-import unittest
+"""
+
 from pathlib import Path
 
 import pandas as pd
@@ -14,7 +14,7 @@ import dmba
 from dmba.data import DATA_DIR
 
 
-class TestData(unittest.TestCase):
+class TestData:
     def test_load_data(self) -> None:
         with pytest.raises(ValueError):
             dmba.load_data('unknown data file')

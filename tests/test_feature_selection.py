@@ -1,18 +1,18 @@
-'''
+"""
 Utility functions for "Data Mining for Business Analytics: Concepts, Techniques, and
 Applications in Python"
 
 (c) 2019-2023 Galit Shmueli, Peter C. Bruce, Peter Gedeck
-'''
-import unittest
+"""
+
 from math import prod
 from typing import Any, List
 
-from dmba.featureSelection import Model, backward_elimination, exhaustive_search, forward_selection, stepwise_selection
+from dmba.feature_selection import Model, backward_elimination, exhaustive_search, forward_selection, stepwise_selection
 
 
-class TestFeatureSelection(unittest.TestCase):
-    def test_exhaustiveSearch(self) -> None:
+class TestFeatureSelection:
+    def test_exhaustive_search(self) -> None:
         variables = ['a', 'b', 'c']
 
         def train_model(_variables: List[str]) -> Any:
