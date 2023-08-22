@@ -8,18 +8,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.11']
     name: Python ${{ matrix.python-version }} sample
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - run: sudo apt install -y graphviz
       - run: python --version
       - run: pip install --upgrade pip 
-      - run: pip install pytest matplotlib pandas scikit-learn graphviz
+      - run: pip install pytest matplotlib polars scikit-learn graphviz
       - run: pytest -rP -p no:cacheprovider
       - run: pip install ipython
       - run: pytest -rP -p no:cacheprovider
@@ -29,9 +29,9 @@ jobs:
     name: Run ruff
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: "3.11"
       - name: Install dependencies
         run: pip install ruff
       - name: Run ruff
@@ -42,9 +42,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: "3.11"
           
 
       - name: Install dependencies
