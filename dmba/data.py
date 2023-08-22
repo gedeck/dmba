@@ -19,25 +19,27 @@ DATA_DIR = Path(__file__).parent.parent / 'data'
 
 def load_data(name: str, **kwargs: Any) -> DataFrame | Series:
     """ Returns the data either as a Pandas data frame or series """
-    data = pl.read_csv(get_data(name), null_values='*', **kwargs)
+    data_path = DATA_DIR / name
+    if not data_path.exists():
+        raise ValueError('Data file {name} not found')
+    if data_path.suffixes == ['.csv']:
+        data = pl.read_csv(data_path, **kwargs)
+    else:
+        data = pl.read_csv(get_data(data_path), **kwargs)
     if data.shape[1] == 1:
         return data[data.columns[0]]  # pylint: disable=E1136
     return data
 
-def get_data(name: str) -> bytes | str:
+def get_data(path: Path) -> bytes:
     """Returns the data as a byte string"""
-    data_path = DATA_DIR / name
-    if not data_path.exists():
-        raise ValueError('Data file {name} not found')
-    if data_path.suffix == '.zip':
+    if path.suffix == '.zip':
         with (
-            ZipFile(data_path) as zip_file,
+            ZipFile(path) as zip_file,
             zip_file.open(zip_file.namelist()[0]) as data_file,
         ):
             return data_file.read()
-    elif data_path.suffixes == ['.csv', '.gz']:
-        with gzip.open(data_path) as data_file:
+    elif path.suffixes == ['.csv', '.gz']:
+        with gzip.open(path) as data_file:
             return data_file.read()
     else:
-        with data_path.open() as data_file:
-            return data_file.read()
+        raise ValueError('Path with unknown suffixes: {path}')
