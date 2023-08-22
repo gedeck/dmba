@@ -19,7 +19,7 @@ class TestData:
         with pytest.raises(ValueError):
             dmba.load_data('unknown data file')
 
-        for name in ('Amtrak.csv.gz', ):
+        for name in ('amtrak.csv', ):
             data = dmba.load_data(name)
             assert isinstance(data, DataFrame)
 
