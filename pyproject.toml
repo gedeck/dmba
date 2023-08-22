@@ -29,6 +29,9 @@ dynamic = ["version"]
 [project.urls]
 Repository = "https://github.com/polars-stats/dmba"
 
+[tool.setuptools.dynamic]
+version = { attr = "src.dmba.version.__version__" }
+
 [tool.setuptools.packages.find]
 # TODO
 package_data = {
