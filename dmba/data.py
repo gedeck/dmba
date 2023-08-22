@@ -19,7 +19,7 @@ DATA_DIR = Path(__file__).parent.parent / 'data'
 
 def load_data(name: str, **kwargs: Any) -> DataFrame | Series:
     """ Returns the data either as a Pandas data frame or series """
-    data = pl.read_csv(get_data(name), **kwargs)
+    data = pl.read_csv(get_data(name), null_values='*', **kwargs)
     if data.shape[1] == 1:
         return data[data.columns[0]]  # pylint: disable=E1136
     return data
