@@ -38,7 +38,7 @@ class TestData:
     def test_kwargs_load_data(self):
         df = dmba.load_data('gdp.csv')
         org_length = len(df)
-        df = dmba.load_data('gdp.csv', skip_rows_after_header=4)
+        df = dmba.load_data('gdp.csv', skip_rows=5)
         assert org_length == len(df) + 4
 
     def test_get_data_file(self):
