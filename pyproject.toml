@@ -15,6 +15,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+requires-python = ">=3.11"
 dependencies = [
     "graphviz",
     "matplotlib",
@@ -35,7 +36,6 @@ package_data = {
 }
 
 [tool.mypy]
-python_version = "3.8"
 warn_return_any = false
 warn_unused_configs = true
 cache_dir = "/tmp"
@@ -76,7 +76,7 @@ exclude = [
     "D_*.py",
     "__init__.py",
   ]
-target-version = "py38"
+target-version = "py311"
 
 [tool.ruff.per-file-ignores]
 "*/collaborative_model/**/*.py" = ["PLR0912", "PLR0915", "PLW2901"]
@@ -87,4 +87,4 @@ minversion = "7.0"
 addopts = "-rP"
 testpaths = [
     "src"
-  ]
+]
