@@ -11,7 +11,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 
 def print_term_document_matrix(
-        count_vect: CountVectorizer, counts: sp.spmatrix) -> None:
+        count_vect: CountVectorizer,  # noqa: ARG001
+        counts: sp.spmatrix) -> None:
     """ Print term-document matrix created by the CountVectorizer
     Input:
         count_vect: scikit-learn Count vectorizer

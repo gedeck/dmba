@@ -126,7 +126,7 @@ def plot_decision_tree(
 
 
 def text_decision_tree(decision_tree: Any, indent: str = '  ', *,
-                       as_ratio: bool = True) -> str:  # noqa: FBT
+                       as_ratio: bool = True) -> str:
     """ Create a text representation of the scikit-learn decision tree
 
     Input:
