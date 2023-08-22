@@ -7,7 +7,7 @@ Applications in Python"
 
 import gzip
 from pathlib import Path
-from typing import Any, Union
+from typing import Any
 from zipfile import ZipFile
 
 import polars as pl
@@ -17,7 +17,7 @@ from polars import DataFrame, Series
 DATA_DIR = Path(__file__).parent.parent / 'data'
 
 
-def load_data(name: str, **kwargs: Any) -> Union[DataFrame, Series]:
+def load_data(name: str, **kwargs: Any) -> DataFrame | Series:
     """ Returns the data either as a Pandas data frame or series """
     data = pl.read_csv(get_data(name), **kwargs)
     if data.shape[1] == 1:
@@ -48,6 +48,6 @@ def get_data_path(name: str) -> Path:
         case ['zip']:
             return DATA_DIR / name
         case ['gz'] | ['csv']:
-            return DATA_DIR / stem / '.csv.gz'
+            return (DATA_DIR / stem).with_suffix('.csv.gz')
         case _:
             return DATA_DIR / name
