@@ -40,8 +40,3 @@ class TestData:
         org_length = len(df)
         df = dmba.load_data('gdp.csv', skip_rows=4)
         assert org_length == len(df) + 4
-
-    def test_get_data_path(self):
-        assert dmba.get_data_path('AutoAndElectronics.zip').exists()
-        assert dmba.get_data_path('gdp.csv').exists()
-        assert dmba.get_data_path('gdp.csv.gz').exists()

@@ -41,13 +41,3 @@ def get_data(name: str) -> bytes | str:
     else:
         with data_path.open() as data_file:
             return data_file.read()
-
-def get_data_path(name: str) -> Path:
-    stem, *suffixes = name.split('.')
-    match suffixes:
-        case ['zip']:
-            return DATA_DIR / name
-        case ['gz'] | ['csv']:
-            return (DATA_DIR / stem).with_suffix('.csv.gz')
-        case _:
-            return DATA_DIR / name
