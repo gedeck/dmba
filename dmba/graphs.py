@@ -11,7 +11,8 @@ from tempfile import TemporaryDirectory
 from typing import Any, Optional
 
 import numpy as np
-import pandas as pd
+import polars as pl
+from polars import DataFrame, Series
 from sklearn.tree import export_graphviz
 
 
@@ -27,7 +28,8 @@ try:
 except ImportError:
     HAS_IMAGE = False
 
-def lift_chart(predicted: pd.Series, *, title: str = 'Decile Lift Chart', labelBars: bool = True,
+
+def lift_chart(predicted: Series, *, title: str = 'Decile Lift Chart', label_bars: bool = True,
               ax: Any = None, figsize: Any = None) -> Any:
     """ Create a lift chart using predicted values
 
@@ -35,29 +37,29 @@ def lift_chart(predicted: pd.Series, *, title: str = 'Decile Lift Chart', labelB
         predictions: must be sorted by probability
         ax (optional): axis for matplotlib graph
         title (optional): set to None to suppress title
-        labelBars (optional): set to False to avoid mean response labels on bar chart
+        label_bars (optional): set to False to avoid mean response labels on bar chart
     """
     # group the sorted predictions into 10 roughly equal groups and calculate the mean
     groups = [int(10 * i / len(predicted)) for i in range(len(predicted))]
-    meanPercentile = predicted.groupby(groups).mean()
+    mean_percentile = predicted.groupby(groups).mean()
     # divide by the mean prediction to get the mean response
-    meanResponse = meanPercentile / predicted.mean()  # type: ignore
-    meanResponse.index = (meanResponse.index + 1) * 10
+    mean_response = mean_percentile / predicted.mean()  # type: ignore
+    mean_response.index = (mean_response.index + 1) * 10
 
-    ax = meanResponse.plot.bar(color='C0', ax=ax, figsize=figsize)
-    ax.set_ylim(0, 1.12 * meanResponse.max() if labelBars else None)
+    ax = mean_response.plot.bar(color='C0', ax=ax, figsize=figsize)
+    ax.set_ylim(0, 1.12 * mean_response.max() if label_bars else None)
     ax.set_xlabel('Percentile')
     ax.set_ylabel('Lift')
     if title:
         ax.set_title(title)
 
-    if labelBars:
+    if label_bars:
         for p in ax.patches:
             ax.annotate(f'{p.get_height():.1f}', (p.get_x(), p.get_height() + 0.1))
     return ax
 
 
-def gains_chart(gains: pd.Series, color: str = 'C0', label: Optional[str] = None,
+def gains_chart(gains: Series, color: str = 'C0', label: Optional[str] = None,
                ax: Any = None, figsize: Any = None) -> Any:
     """ Create a gains chart using predicted values
 
@@ -67,18 +69,18 @@ def gains_chart(gains: pd.Series, color: str = 'C0', label: Optional[str] = None
         ax (optional): axis for matplotlib graph
         figsize (optional): size of matplotlib graph
     """
-    nTotal = len(gains)  # number of records
-    nActual = gains.sum()  # number of desired records
+    n_total = len(gains)  # number of records
+    n_actual = gains.sum()  # number of desired records
 
     # get cumulative sum of gains and convert to percentage
-    cumGains = pd.concat([pd.Series([0]), gains.cumsum()])  # Note the additional 0 at the front
-    gains_df = pd.DataFrame({'records': list(range(len(gains) + 1)), 'cumGains': cumGains})
+    cum_gains = pl.concat([Series([0]), gains.cumsum()])  # Note the additional 0 at the front
+    gains_df = DataFrame({'records': list(range(len(gains) + 1)), 'cum_gains': cum_gains})
 
-    ax = gains_df.plot(x='records', y='cumGains', color=color, label=label, legend=False,
+    ax = gains_df.plot(x='records', y='cum_gains', color=color, label=label, legend=False,
                        ax=ax, figsize=figsize)
 
     # Add line for random gain
-    ax.plot([0, nTotal], [0, nActual], linestyle='--', color='k')
+    ax.plot([0, n_total], [0, n_actual], linestyle='--', color='k')
     ax.set_xlabel('# records')
     ax.set_ylabel('# cumulative gains')
     return ax

@@ -29,6 +29,6 @@ class TestTextMining:
         with redirect_stdout(out):
             print_term_document_matrix(count_vect, counts)
         s = out.getvalue()
-        assert 'S1  S2  S3' in s
-        assert 'first      1   0   0' in s
-        assert 'the        1   0   1' in s
+        assert 'S1  ┆ S2  ┆ S3' in s
+        assert '1   ┆ 0   ┆ 0' in s
+        assert '1   ┆ 0   ┆ 1' in s

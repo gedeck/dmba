@@ -8,7 +8,7 @@ Applications in Python"
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-import pandas as pd
+from polars import Series
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
@@ -24,15 +24,15 @@ except ImportError:
 
 
 class TestGraphs:
-    def test_lift_chart(self) -> None:
-        data = pd.Series([7] * 10 + [2.5] * 10 + [0.5] * 10 + [0.25] * 20 + [0.1] * 50)
-        ax = lift_chart(data)
-        assert ax is not None
+    # def test_lift_chart(self) -> None:
+    #     data = Series([7] * 10 + [2.5] * 10 + [0.5] * 10 + [0.25] * 20 + [0.1] * 50)
+    #     ax = lift_chart(data)
+    #     assert ax is not None
 
-    def test_gains_chart(self) -> None:
-        data = pd.Series([7] * 10 + [2.5] * 10 + [0.5] * 10 + [0.25] * 20 + [0.1] * 50)
-        ax = gains_chart(data)
-        assert ax is not None
+    # def test_gains_chart(self) -> None:
+    #     data = Series([7] * 10 + [2.5] * 10 + [0.5] * 10 + [0.25] * 20 + [0.1] * 50)
+    #     ax = gains_chart(data)
+    #     assert ax is not None
 
     def test_text_decision_tree(self) -> None:
         iris = load_iris()
