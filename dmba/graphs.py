@@ -29,8 +29,9 @@ except ImportError:
     HAS_IMAGE = False
 
 
-def lift_chart(predicted: Series, *, title: str = 'Decile Lift Chart', label_bars: bool = True,
-              ax: Any = None, figsize: Any = None) -> Any:
+def lift_chart(
+    predicted: Series, *, title: str = 'Decile Lift Chart',
+    label_bars: bool = True, ax: Any = None, figsize: Any = None) -> Any:
     """ Create a lift chart using predicted values
 
     Input:
@@ -76,8 +77,8 @@ def gains_chart(gains: Series, color: str = 'C0', label: Optional[str] = None,
     cum_gains = pl.concat([Series([0]), gains.cumsum()])  # Note the additional 0 at the front
     gains_df = DataFrame({'records': list(range(len(gains) + 1)), 'cum_gains': cum_gains})
 
-    ax = gains_df.plot(x='records', y='cum_gains', color=color, label=label, legend=False,
-                       ax=ax, figsize=figsize)
+    ax = gains_df.plot(x='records', y='cum_gains', color=color, label=label,
+                       legend=False, ax=ax, figsize=figsize)
 
     # Add line for random gain
     ax.plot([0, n_total], [0, n_actual], linestyle='--', color='k')
@@ -124,7 +125,8 @@ def plot_decision_tree(
 # Taken from scikit-learn documentation
 
 
-def text_decision_tree(decision_tree: Any, indent: str = '  ', *, as_ratio: bool = True) -> str:  # noqa: FBT
+def text_decision_tree(decision_tree: Any, indent: str = '  ', *,
+                       as_ratio: bool = True) -> str:  # noqa: FBT
     """ Create a text representation of the scikit-learn decision tree
 
     Input:

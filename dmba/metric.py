@@ -78,8 +78,8 @@ def regression_summary(y_true: Vector, y_pred: Vector) -> None:
         y_true: actual values
         y_pred: predicted values
     """
-    y_true = _toArray(y_true)
-    y_pred = _toArray(y_pred)
+    y_true = _to_array(y_true)
+    y_pred = _to_array(y_pred)
     y_res = y_true - y_pred
     metrics = [
         ('Mean Error (ME)', sum(y_res) / len(y_res)),
@@ -98,14 +98,15 @@ def regression_summary(y_true: Vector, y_pred: Vector) -> None:
         print(fmt1.format(metric, value))
 
 
-def _toArray(y: Vector) -> np.ndarray:
+def _to_array(y: Vector) -> np.ndarray:
     ya = np.asarray(y)
     if len(ya.shape) == 2 and ya.shape[1] == 1:
         ya = ya.ravel()
     return ya
 
 
-def classification_summary(y_true: Vector, y_pred: Vector, class_names: Optional[list[str]] = None) -> None:
+def classification_summary(y_true: Vector, y_pred: Vector,
+                           class_names: Optional[list[str]] = None) -> None:
     """ Print a summary of classification performance
 
     Input:
