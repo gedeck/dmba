@@ -21,7 +21,7 @@ def load_data(name: str, **kwargs: Any) -> DataFrame | Series:
     """ Returns the data either as a Pandas data frame or series """
     data_path = DATA_DIR / name
     if not data_path.exists():
-        raise ValueError('Data file {name} not found')
+        raise ValueError(f'Data file {data_path} not found')
     if data_path.suffixes == ['.csv']:
         data = pl.read_csv(data_path, **kwargs)
     else:
