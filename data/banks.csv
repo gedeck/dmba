@@ -1,4 +1,4 @@
-Obs,Financial Condition,TotCap/Assets,TotExp/Assets,TotLns&Lses/Assets
+obs,financial_condition,tot_cap/assets,tot_exp/assets,tot_lns&lses/assets
 1,1,9.7,0.12,0.65
 2,1,1,0.11,0.62
 3,1,6.9,0.09,1.02
