@@ -26,7 +26,7 @@ def load_data(name: str, **kwargs: Any) -> DataFrame | Series:
 
 def get_data(name: str) -> bytes | str:
     """Returns the data as a byte string"""
-    data_path = get_data_path(name)
+    data_path = DATA_DIR / name
     if not data_path.exists():
         raise ValueError('Data file {name} not found')
     if data_path.suffix == '.zip':
