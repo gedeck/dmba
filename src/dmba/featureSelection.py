@@ -46,7 +46,7 @@ def exhaustive_search(variables: List[str], train_model: TrainModel,
                     score=subset_score,
                     model=subset_model,
                 )
-        assert best is not None  # noqa: ignore=S101
+        assert best is not None  # noqa: S101
         result.append(best)
     return result
 
