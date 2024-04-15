@@ -35,7 +35,7 @@ jobs:
       - name: Install dependencies
         run: pip install ruff
       - name: Run ruff
-        run: cd ./src && ruff .
+        run: cd ./src && ruff check .
 
   mypy:
     runs-on: ubuntu-latest
