@@ -11,9 +11,9 @@ jobs:
         python-version: ['3.8', '3.9', '3.10', '3.11']
     name: Python ${{ matrix.python-version }} sample
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - run: sudo apt install -y graphviz
@@ -28,8 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Run ruff
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: "3.8"
       - name: Install dependencies
@@ -40,9 +40,9 @@ jobs:
   mypy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: "3.8"
           
