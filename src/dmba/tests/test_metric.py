@@ -14,7 +14,7 @@ from sklearn.metrics import r2_score
 
 from dmba import AIC_score, BIC_score, adjusted_r2_score, classificationSummary, regressionSummary
 
-MockModel = namedtuple('MockModel', 'coef_')
+MockModel = namedtuple('MockModel', 'coef_')  # noqa: PYI024
 
 
 class TestMetric(unittest.TestCase):
