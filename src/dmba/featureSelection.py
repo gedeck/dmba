@@ -193,7 +193,7 @@ def stepwise_selection(variables: List[str], train_model: TrainModel, score_mode
                 step_score = score_model(step_model, step_var)
                 step.append(Step(step_score, variable, step_model, 'add'))
 
-        if 'backward' in directions:
+        if BACKWARD in directions:
             for variable in best_variables:
                 step_var = list(best_variables)
                 step_var.remove(variable)
